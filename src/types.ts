@@ -15,6 +15,30 @@ export interface ItemRef {
   name: string
   sprite: string
   custom?: boolean
+  minecraftId?: string
+}
+
+export interface SavedLayout {
+  id: string
+  name: string
+  isExample: boolean
+  slots: Array<Pick<HotbarSlot, 'slot' | 'flex' | 'items'>>
+}
+
+export interface ItemOverride { id: string; count: number }
+export interface DestinationSettings {
+  layoutId?: string
+  // Missing = automatic; null = intentionally empty.
+  overrides: Record<string, ItemOverride | null>
+}
+
+export interface Workspace {
+  version: 2
+  activeLayoutId: string
+  defaultLayoutId: string
+  layouts: SavedLayout[]
+  bindings: { hotbar: Binding[]; offhand: Binding; other: OtherBinding[] }
+  destinations: Record<string, DestinationSettings>
 }
 
 export interface HotbarSlot {

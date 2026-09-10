@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ITEM_CATALOG } from './data/catalog'
-import { createStarterPlan } from './data/starter'
+import { Layouts } from './components/Layouts'
+import { MinecraftExports } from './components/MinecraftExports'
+import { MINECRAFT_ITEMS } from './lib/inventory'
 import { bindingSignature, bindingsMatch, findConflicts, keyboardEventToBinding, mouseEventToBinding } from './lib/bindings'
 import { generateMarkdown, patchStandardSettings, safeFilename, type JsonPatchResult } from './lib/exports'
 import { buildPromptPool, makeSequence, practiceSummary } from './lib/practice'
-import { loadPlan, savePlan } from './lib/storage'
-import type { Binding, HotbarPlan, HotbarSlot, ItemRef, OtherBinding, PracticePrompt, PracticeResult } from './types'
+import { activePlan, createWorkspace, loadWorkspace, saveWorkspace, updateActivePlan, WORKSPACE_KEY } from './lib/storage'
+import type { Binding, HotbarPlan, HotbarSlot, ItemRef, OtherBinding, PracticePrompt, PracticeResult, Workspace } from './types'
 
 type View = 'plan' | 'practice' | 'export'
 
@@ -177,6 +179,9 @@ function SlotEditor({ plan, selected, onPlan }: { plan: HotbarPlan; selected: nu
               aria-label={`Item ${index + 1} name`}
               onChange={(event) => updateSlot((current) => ({ ...current, items: current.items.map((entry, itemIndex) => itemIndex === index ? { ...entry, name: event.target.value } : entry) }))}
             />
+            {item.custom && <select aria-label={`Minecraft item for ${item.name}`} value={item.minecraftId ?? ''} onChange={(event) => updateSlot((current) => ({ ...current, items: current.items.map((entry, itemIndex) => itemIndex === index ? { ...entry, minecraftId: event.target.value || undefined } : entry) }))}>
+              <option value="">Text only</option>{MINECRAFT_ITEMS.map((entry) => <option key={entry.id} value={entry.id}>{entry.name}</option>)}
+            </select>}
             <div className="row-actions">
               <button type="button" disabled={index === 0} aria-label={`Move ${item.name} up`} onClick={() => moveItem(index, -1)}>↑</button>
               <button type="button" disabled={index === slot.items.length - 1} aria-label={`Move ${item.name} down`} onClick={() => moveItem(index, 1)}>↓</button>
@@ -400,28 +405,35 @@ function downloadFile(content: string, filename: string, type: string) {
   URL.revokeObjectURL(url)
 }
 
-function ExportView({ plan }: { plan: HotbarPlan }) {
+function ExportView({ plan, workspace, onWorkspace }: { plan: HotbarPlan; workspace: Workspace; onWorkspace: (workspace: Workspace) => void }) {
   const generated = useMemo(() => generateMarkdown(plan), [plan])
   const [markdown, setMarkdown] = useState(generated)
+  const [jsonSource, setJsonSource] = useState('')
   const [jsonName, setJsonName] = useState('standardsettings.json')
   const [jsonResult, setJsonResult] = useState<JsonPatchResult | null>(null)
   const [jsonError, setJsonError] = useState('')
 
   useEffect(() => setMarkdown(generated), [generated])
+  useEffect(() => {
+    if (!jsonSource) return
+    try { setJsonResult(patchStandardSettings(jsonSource, plan)); setJsonError('') }
+    catch (error) { setJsonResult(null); setJsonError(error instanceof Error ? error.message : 'Could not patch settings.') }
+  }, [jsonSource, workspace.bindings])
 
   const readJson = async (file?: File) => {
     setJsonResult(null)
     setJsonError('')
     if (!file) return
     setJsonName(file.name)
-    try { setJsonResult(patchStandardSettings(await file.text(), plan)) }
+    try { const source = await file.text(); setJsonSource(source); setJsonResult(patchStandardSettings(source, plan)) }
     catch (error) { setJsonError(error instanceof Error ? error.message : 'Could not read this file.') }
   }
 
   return (
     <main className="view-shell export-view">
       <ConflictNotice plan={plan} context="export" />
-      <div className="export-heading"><span className="eyebrow">TAKE IT WITH YOU</span><h1>Export without the cleanup.</h1><p>Both formats are generated locally. Nothing leaves this browser.</p></div>
+      <div className="export-heading"><span className="eyebrow">TAKE IT WITH YOU</span><h1>Export without the cleanup.</h1><p>Exports are generated locally. Practice templates download on demand; your layouts stay in this browser.</p></div>
+      <MinecraftExports workspace={workspace} onChange={onWorkspace} />
       <div className="export-grid">
         <section className="export-panel">
           <div className="export-panel-heading"><div><span className="file-type">MD</span><div><h2>Markdown plan</h2><p>Ready for Obsidian, GitHub, or any notes app.</p></div></div><button className="primary-button" type="button" onClick={() => downloadFile(markdown, `${safeFilename(plan.name)}.md`, 'text/markdown')}><MiniIcon name="download" /> Download</button></div>
@@ -448,16 +460,25 @@ function ExportView({ plan }: { plan: HotbarPlan }) {
 }
 
 export default function App() {
-  const [plan, setPlan] = useState<HotbarPlan>(() => loadPlan())
+  const [initial] = useState(() => {
+    try { return { workspace: loadWorkspace(), error: '' } }
+    catch (error) { return { workspace: createWorkspace(), error: error instanceof Error ? error.message : 'Could not read saved layouts.' } }
+  })
+  const [workspace, setWorkspace] = useState(initial.workspace)
+  const [readError, setReadError] = useState(initial.error)
+  const [saveError, setSaveError] = useState('')
+  const plan = activePlan(workspace)
+  const setPlan = (next: HotbarPlan) => setWorkspace((current) => updateActivePlan(current, next))
   const [view, setView] = useState<View>('plan')
   const [saveState, setSaveState] = useState<'saved' | 'saving'>('saved')
   const [resetOpen, setResetOpen] = useState(false)
 
   useEffect(() => {
+    if (readError) return
     setSaveState('saving')
-    const timer = window.setTimeout(() => { savePlan(plan); setSaveState('saved') }, 300)
-    return () => window.clearTimeout(timer)
-  }, [plan])
+    try { saveWorkspace(workspace); setSaveState('saved'); setSaveError('') }
+    catch { setSaveError('Browser storage is full or unavailable. Changes have not been saved. Keep this tab open and free storage before continuing.') }
+  }, [workspace, readError])
 
   const setCurrentPlan = (next: HotbarPlan) => setPlan(next)
   const views: Array<{ id: View; label: string; icon: 'grid' | 'target' | 'export' }> = [
@@ -466,22 +487,29 @@ export default function App() {
     { id: 'export', label: 'Export', icon: 'export' },
   ]
 
+  if (readError) return <main className="view-shell"><h1>Saved layouts need attention</h1><p role="alert">{readError}</p>
+    <button type="button" className="secondary-button" onClick={() => downloadFile(localStorage.getItem(WORKSPACE_KEY) ?? '', 'hotbar-lab-storage-backup.json', 'application/json')}>Download storage backup</button>
+    <button type="button" className="danger-button" onClick={() => { if (window.confirm('Reset unreadable saved layouts? Download a backup first.')) { setWorkspace(createWorkspace()); setReadError('') } }}>Reset saved layouts</button>
+  </main>
+
   return (
     <div className="app-shell">
       <header className="topbar">
         <a className="brand" href="#" onClick={(event) => { event.preventDefault(); setView('plan') }}><span className="brand-cube"><i /></span><span>HOTBAR <b>LAB</b></span></a>
-        <div className="plan-identity"><input value={plan.name} aria-label="Plan name" onChange={(event) => setPlan({ ...plan, name: event.target.value, isExample: false })} /><span className={`save-status ${saveState}`}>{saveState === 'saved' ? 'Saved locally' : 'Saving…'}</span>{plan.isExample && <span className="example-badge">EXAMPLE</span>}</div>
+        <div className="plan-identity"><input value={plan.name} aria-label="Plan name" onChange={(event) => setPlan({ ...plan, name: event.target.value, isExample: false })} /><span className={`save-status ${saveState}`}>{saveError ? 'Not saved' : saveState === 'saved' ? 'Saved locally' : 'Saving…'}</span>{plan.isExample && <span className="example-badge">EXAMPLE</span>}</div>
         <nav className="main-nav" aria-label="Main views">{views.map((item) => <button type="button" key={item.id} className={view === item.id ? 'is-active' : ''} onClick={() => setView(item.id)}><MiniIcon name={item.icon} />{item.label}</button>)}</nav>
         <button className="reset-button" type="button" onClick={() => setResetOpen(true)}><MiniIcon name="reset" /><span>Reset</span></button>
       </header>
 
+      {saveError && <p className="notice inline-error" role="alert">{saveError}</p>}
+      {view !== 'practice' && <Layouts workspace={workspace} onChange={setWorkspace} />}
       {view === 'plan' && <PlanView plan={plan} onPlan={setCurrentPlan} />}
-      {view === 'practice' && <PracticeView plan={plan} />}
-      {view === 'export' && <ExportView plan={plan} />}
+      {view === 'practice' && <PracticeView key={workspace.activeLayoutId} plan={plan} />}
+      {view === 'export' && <ExportView plan={plan} workspace={workspace} onWorkspace={setWorkspace} />}
 
       <footer className="footer"><span>HOTBAR LAB · MINECRAFT 1.16</span><span>Local-only · No account · No uploads</span></footer>
 
-      {resetOpen && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setResetOpen(false) }}><div className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="reset-title"><span className="dialog-mark"><MiniIcon name="reset" /></span><h2 id="reset-title">Reset the whole plan?</h2><p>This restores the example hotbar and other bindings. Your current local plan will be replaced.</p><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setResetOpen(false)}>Cancel</button><button className="danger-button" type="button" onClick={() => { setPlan(createStarterPlan()); setResetOpen(false); setView('plan') }}>Reset plan</button></div></div></div>}
+      {resetOpen && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setResetOpen(false) }}><div className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="reset-title"><span className="dialog-mark"><MiniIcon name="reset" /></span><h2 id="reset-title">Reset all layouts?</h2><p>This restores the example layout and shared bindings. All saved layouts, assignments, and exact overrides will be replaced.</p><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setResetOpen(false)}>Cancel</button><button className="danger-button" type="button" onClick={() => { setWorkspace(createWorkspace()); setResetOpen(false); setView('plan') }}>Reset plan</button></div></div></div>}
     </div>
   )
 }

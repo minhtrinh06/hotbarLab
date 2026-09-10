@@ -1,0 +1,1722 @@
+{
+  "templates": {
+    "mpk": {
+      "file": "mpk-0.6.nbt",
+      "sha256": "6eb9e17b6e48a9314900d83685e28336dbbb0dd2887b3b6f5303476076d99236",
+      "source": "https://github.com/Knawk/mc-MiniPracticeKit",
+      "version": "0.6"
+    },
+    "map": {
+      "file": "mcsr-2.0.0.zip",
+      "sha256": "8d6e78b541ccd16ea6ab9ae9dbd14893e40a9a61ead824c70a678e0255870174",
+      "source": "https://github.com/Dibedy/The-MCSR-Practice-Map/releases/tag/latest",
+      "version": "2.0.0"
+    }
+  },
+  "destinations": [
+    {
+      "id": "mpk:0",
+      "target": "mpk",
+      "name": "Nether Enter",
+      "file": "mpk-0.6.nbt",
+      "path": [
+        "0",
+        0,
+        "tag",
+        "BlockEntityTag",
+        "Items",
+        0,
+        "tag",
+        "BlockEntityTag",
+        "Items"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:dirt",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:magma_block",
+          "count": 2
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:lava_bucket",
+          "count": 1
+        },
+        {
+          "slot": 8,
+          "id": "minecraft:cooked_salmon",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "mpk:1",
+      "target": "mpk",
+      "name": "Bastion Enter",
+      "file": "mpk-0.6.nbt",
+      "path": [
+        "0",
+        1,
+        "tag",
+        "BlockEntityTag",
+        "Items",
+        0,
+        "tag",
+        "BlockEntityTag",
+        "Items"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:dirt",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:magma_block",
+          "count": 2
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:lava_bucket",
+          "count": 1
+        },
+        {
+          "slot": 8,
+          "id": "minecraft:cooked_salmon",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "mpk:2",
+      "target": "mpk",
+      "name": "Fortress Enter",
+      "file": "mpk-0.6.nbt",
+      "path": [
+        "0",
+        2,
+        "tag",
+        "BlockEntityTag",
+        "Items",
+        0,
+        "tag",
+        "BlockEntityTag",
+        "Items"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:splash_potion",
+          "count": 1,
+          "potion": "minecraft:fire_resistance",
+          "special": true
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 8,
+          "id": "minecraft:cooked_salmon",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "mpk:3",
+      "target": "mpk",
+      "name": "Nether Exit",
+      "file": "mpk-0.6.nbt",
+      "path": [
+        "0",
+        3,
+        "tag",
+        "BlockEntityTag",
+        "Items",
+        0,
+        "tag",
+        "BlockEntityTag",
+        "Items"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:nether_bricks",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:obsidian",
+          "count": 22
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:splash_potion",
+          "count": 1,
+          "potion": "minecraft:fire_resistance",
+          "special": true
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 8,
+          "id": "minecraft:cooked_salmon",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "mpk:4",
+      "target": "mpk",
+      "name": "Eye Spy",
+      "file": "mpk-0.6.nbt",
+      "path": [
+        "0",
+        4,
+        "tag",
+        "BlockEntityTag",
+        "Items",
+        0,
+        "tag",
+        "BlockEntityTag",
+        "Items"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:nether_bricks",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:obsidian",
+          "count": 2
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:ender_pearl",
+          "count": 8
+        },
+        {
+          "slot": 8,
+          "id": "minecraft:cooked_salmon",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "mpk:5",
+      "target": "mpk",
+      "name": "End Enter",
+      "file": "mpk-0.6.nbt",
+      "path": [
+        "0",
+        5,
+        "tag",
+        "BlockEntityTag",
+        "Items",
+        0,
+        "tag",
+        "BlockEntityTag",
+        "Items"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:nether_bricks",
+          "count": 32
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:gravel",
+          "count": 32
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:crying_obsidian",
+          "count": 24
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:ender_pearl",
+          "count": 6
+        },
+        {
+          "slot": 8,
+          "id": "minecraft:cooked_salmon",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "map:portal:surface_lava",
+      "target": "map",
+      "name": "Portal · Surface Lava",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        0,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:water_bucket",
+          "count": 1
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:oak_planks",
+          "count": 16
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:magma",
+      "target": "map",
+      "name": "Portal · Magma Ravine",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        1,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:oak_door",
+          "count": 3
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:gravel",
+          "count": 16
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:dirt",
+          "count": 64
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:blind",
+      "target": "map",
+      "name": "Portal · Nether Exit",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        2,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:ender_eye",
+          "count": 10
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:obsidian",
+          "count": 10
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:magma_bucketless",
+      "target": "map",
+      "name": "Portal · Bucktless",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        3,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:sand",
+          "count": 8
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:oak_planks",
+          "count": 16
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:oak_door",
+          "count": 3
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:blacksmith",
+      "target": "map",
+      "name": "Portal · Blacksmith",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        4,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:water_bucket",
+          "count": 1
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:oak_planks",
+          "count": 16
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:obsidian",
+          "count": 8
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:water_ravine",
+      "target": "map",
+      "name": "Portal · Wall Portal",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        5,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:gravel",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:dirt",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:oak_door",
+          "count": 3
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:ruined",
+      "target": "map",
+      "name": "Portal · Ruined Portal",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        6,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:water_bucket",
+          "count": 1
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:oak_planks",
+          "count": 16
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:fire_charge",
+          "count": 1
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:cave",
+      "target": "map",
+      "name": "Portal · Cave Portal",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        7,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:water_bucket",
+          "count": 1
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:cobblestone",
+          "count": 16
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:stronghold",
+      "target": "map",
+      "name": "Portal · Stronghold",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        8,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:water_bucket",
+          "count": 1
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:cobblestone",
+          "count": 16
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:ender_eye",
+          "count": 12
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:flint_and_steel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:custom",
+      "target": "map",
+      "name": "Portal · Custom",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        9,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 4,
+          "id": "minecraft:cod",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:portal:portalbreak",
+      "target": "map",
+      "name": "Portal · Portal Break",
+      "file": "data/command_storage_portal.dat",
+      "path": [
+        "data",
+        "contents",
+        "levels",
+        "levels",
+        10,
+        "loadout",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:egg",
+          "count": 1,
+          "special": true,
+          "protected": true,
+          "label": "Practice reset egg"
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:ender_eye",
+          "count": 10
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:lava_bucket",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:fire_charge",
+          "count": 64
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:inventory:0",
+      "target": "map",
+      "name": "Fortress · Bed",
+      "file": "data/command_storage_inventory.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        0,
+        "hotbar"
+      ],
+      "copies": [
+        [
+          "data",
+          "contents",
+          "loadouts",
+          "selected",
+          "hotbar"
+        ]
+      ],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:splash_potion",
+          "count": 1,
+          "potion": "minecraft:fire_resistance",
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:inventory:1",
+      "target": "map",
+      "name": "Fortress · TNT",
+      "file": "data/command_storage_inventory.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        1,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:red_shulker_box",
+          "count": 1,
+          "special": true,
+          "alternatives": [
+            "minecraft:tnt"
+          ]
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:splash_potion",
+          "count": 1,
+          "potion": "minecraft:fire_resistance",
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:inventory:2",
+      "target": "map",
+      "name": "Fortress · Bed + TNT",
+      "file": "data/command_storage_inventory.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        2,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:tnt",
+          "count": 1
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:inventory:3",
+      "target": "map",
+      "name": "Fortress · Bed or TNT",
+      "file": "data/command_storage_inventory.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        3,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:shulker_box",
+          "count": 1,
+          "special": true,
+          "alternatives": [
+            "minecraft:tnt",
+            "minecraft:white_bed"
+          ]
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:splash_potion",
+          "count": 1,
+          "potion": "minecraft:fire_resistance",
+          "special": true
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:inventory:4",
+      "target": "map",
+      "name": "Fortress · Loadout 5",
+      "file": "data/command_storage_inventory.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        4,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": true,
+      "items": []
+    },
+    {
+      "id": "map:zero_practice_loadouts:0",
+      "target": "map",
+      "name": "Zero / One Cycle · Default",
+      "file": "data/command_storage_zero_practice_loadouts.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        0,
+        "hotbar"
+      ],
+      "copies": [
+        [
+          "data",
+          "contents",
+          "loadouts",
+          "selected",
+          "hotbar"
+        ]
+      ],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:nether_bricks",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:respawn_anchor",
+          "count": 2
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:zero_practice_loadouts:1",
+      "target": "map",
+      "name": "Zero / One Cycle · No Prep",
+      "file": "data/command_storage_zero_practice_loadouts.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        1,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:soul_sand",
+          "count": 64
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:gravel",
+          "count": 64
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:glass_pane",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:oak_boat",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:fire_charge",
+          "count": 8
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:iron_axe",
+          "count": 1,
+          "special": true
+        }
+      ]
+    },
+    {
+      "id": "map:zero_practice_loadouts:2",
+      "target": "map",
+      "name": "Zero / One Cycle · One Cycle",
+      "file": "data/command_storage_zero_practice_loadouts.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        2,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 8,
+          "id": "minecraft:ender_pearl",
+          "count": 16
+        },
+        {
+          "slot": 7,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 6,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 5,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 4,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 3,
+          "id": "minecraft:white_bed",
+          "count": 1
+        },
+        {
+          "slot": 2,
+          "id": "minecraft:iron_shovel",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 1,
+          "id": "minecraft:iron_pickaxe",
+          "count": 1,
+          "special": true
+        },
+        {
+          "slot": 0,
+          "id": "minecraft:egg",
+          "count": 1,
+          "protected": true,
+          "label": "Practice reset egg"
+        }
+      ]
+    },
+    {
+      "id": "map:zero_practice_loadouts:3",
+      "target": "map",
+      "name": "Zero / One Cycle · Loadout 4",
+      "file": "data/command_storage_zero_practice_loadouts.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        3,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:egg",
+          "count": 1,
+          "protected": true,
+          "label": "Practice reset egg"
+        }
+      ]
+    },
+    {
+      "id": "map:zero_practice_loadouts:4",
+      "target": "map",
+      "name": "Zero / One Cycle · Loadout 5",
+      "file": "data/command_storage_zero_practice_loadouts.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadouts",
+        "loadouts",
+        4,
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": [
+        {
+          "slot": 0,
+          "id": "minecraft:egg",
+          "count": 1,
+          "protected": true,
+          "label": "Practice reset egg"
+        }
+      ]
+    },
+    {
+      "id": "map:bastion:1",
+      "target": "map",
+      "name": "Bastion · Loadout 1",
+      "file": "data/command_storage_minecraft.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadout.1",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": []
+    },
+    {
+      "id": "map:bastion:2",
+      "target": "map",
+      "name": "Bastion · Loadout 2",
+      "file": "data/command_storage_minecraft.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadout.2",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": []
+    },
+    {
+      "id": "map:bastion:3",
+      "target": "map",
+      "name": "Bastion · Loadout 3",
+      "file": "data/command_storage_minecraft.dat",
+      "path": [
+        "data",
+        "contents",
+        "loadout.3",
+        "hotbar"
+      ],
+      "copies": [],
+      "missing": false,
+      "items": []
+    }
+  ]
+}
