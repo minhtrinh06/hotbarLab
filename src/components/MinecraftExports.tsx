@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { DestinationSettings, ItemOverride, Workspace } from '../types'
-import { DESTINATIONS, MINECRAFT_ITEMS, TEMPLATES, itemName, resolveHotbar, stackLimit, unmappedLabels, type ExportTarget, type Stack } from '../lib/inventory'
+import { DESTINATIONS, MINECRAFT_ITEMS, TEMPLATES, defaultDestinationLayout, destinationLayout, itemName, resolveHotbar, stackLimit, unmappedLabels, type ExportTarget, type Stack } from '../lib/inventory'
 
 function SlotOverride({ slot, stack, override, onChange }: {
   slot: number; stack: Stack | null; override: ItemOverride | null | undefined
@@ -76,20 +76,20 @@ function ExportPanel({ target, workspace, onChange }: {
     task.postMessage({ target, workspace })
   }
   return <section className="export-panel minecraft-panel" aria-label={target === 'mpk' ? 'MPK export' : 'Practice map export'}>
-    <div className="export-panel-heading"><div><span className="file-type">{target === 'mpk' ? 'NBT' : 'ZIP'}</span><div>
+    <div className="export-panel-heading"><div>{target === 'mpk' ? <img className="export-barrel-icon" src="/assets/practice/barrel.png" alt="" /> : <span className="file-type">ZIP</span>}<div>
       <h2>{target === 'mpk' ? 'MiniPracticeKit' : 'MCSR Practice Map'}</h2>
       <p>Version {TEMPLATES[target].version} · Minecraft Java 1.16.1 · {destinations.length} destinations</p>
     </div></div></div>
     <label className="field-label">{target === 'mpk' ? 'Preset barrel' : 'Map loadout'}
       <select aria-label={target === 'mpk' ? 'Preset barrel' : 'Map loadout'} value={destinationId} onChange={(event) => setDestinationId(event.target.value)}>
         {destinations.map((entry) => {
-          const assigned = workspace.layouts.find((layout) => layout.id === (workspace.destinations[entry.id]?.layoutId ?? workspace.defaultLayoutId))
+          const assigned = destinationLayout(entry, workspace)
           return <option key={entry.id} value={entry.id}>{entry.name} — {assigned?.name}</option>
         })}
       </select>
     </label>
     <label className="field-label">Assigned scenario<select aria-label={`${target} assigned scenario`} value={settings.layoutId ?? ''} onChange={(event) => update({ ...settings, layoutId: event.target.value || undefined })}>
-      <option value="">Default scenario</option>
+      <option value="">Automatic — {defaultDestinationLayout(destination, workspace)?.name}</option>
       {workspace.layouts.map((layout) => <option key={layout.id} value={layout.id}>{layout.name}</option>)}
     </select></label>
     <p className="field-help">Rearrange supplied hotbar items using the scenario’s priority order. Exact overrides apply to this destination. Other inventory slots and armor are retained.</p>

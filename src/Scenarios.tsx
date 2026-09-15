@@ -74,7 +74,7 @@ export function ScenarioPicker({ library, onSelect, onImport, onNew, onDuplicate
       </div>}
     </div>
     <div className="scenario-actions"><button className="secondary-button" onClick={onNew}>+ New scenario</button><button className="secondary-button" onClick={onDuplicate}>Duplicate</button><button ref={importTrigger} type="button" className="secondary-button" aria-expanded={open === 'import'} aria-controls="scenario-popover" aria-haspopup="dialog" disabled={library.scenarios.length < 2} onClick={() => { setOpen(open === 'import' ? null : 'import'); setQuery('') }}>Import from another scenario</button><button className="text-button" disabled={current.id === library.defaultId} onClick={onDefault}>{current.id === library.defaultId ? 'Default scenario' : 'Make default'}</button><button className="text-button danger-text" disabled={current.group === 'main'} onClick={onDelete}>Delete scenario</button></div>
-    <p className="scenario-help">Rename above. Scenarios share keybinds. Unassigned practice presets use your default scenario.</p>
+    <p className="scenario-help">Rename above. Scenarios share keybinds. Practice presets automatically use the matching scenario, or your default when no match is available.</p>
     {message && <p className="scenario-help" role="status">{message}</p>}
   </section>
 }

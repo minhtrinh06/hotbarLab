@@ -8,6 +8,7 @@ The rendered red bed reference image was retrieved from [PNGAll](https://www.png
 
 ## Practice icons
 
+- `practice/barrel.png`: user-supplied Minecraft barrel render, identified by the user as sourced from the Minecraft Wiki; copied unchanged on September 15, 2026. Minecraft artwork by Mojang Studios.
 - `practice/leather-boots.png`: Minecraft leather boots inventory render from [MC Item Gallery](https://mcitemgallery.com/items/leather-boots/), version 1.14.4.
 - `practice/grass-block.png`: Minecraft grass block inventory render from [MC Item Gallery](https://mcitemgallery.com/items/grass-block/), version 1.15.2.
 - `practice/ninjabrain.jpg`: profile image from [Ninjabrain's YouTube channel](https://www.youtube.com/c/Ninjabrain), retrieved September 15, 2026; used as the requested overlay cue.

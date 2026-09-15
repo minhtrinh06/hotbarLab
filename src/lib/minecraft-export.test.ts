@@ -2,14 +2,51 @@ import { readFileSync } from 'node:fs'
 import { read, stringify, type CompoundTag } from 'nbtify'
 import { unzipSync } from 'fflate'
 import { describe, expect, it } from 'vitest'
-import { createWorkspace } from './storage'
-import { DESTINATIONS, resolveHotbar, type Destination } from './inventory'
+import { createWorkspace, deleteLayout, loadWorkspace, saveWorkspace } from './storage'
+import { DESTINATIONS, destinationLayout, resolveHotbar, type Destination } from './inventory'
 import { exportMinecraft, inventoryAt } from './minecraft-export'
 
 describe('practice hotbars', () => {
+  it('automatically matches practice scenarios, keeps manual assignments, and falls back after deletion', () => {
+    const workspace = createWorkspace()
+    const expected = {
+      'mpk:0': 'nether-terrain', 'mpk:1': 'nether-terrain', 'mpk:2': 'into-fort',
+      'mpk:3': 'blinding', 'mpk:4': 'strong-hold', 'mpk:5': 'zero',
+      'map:portal:blind': 'blinding', 'map:portal:stronghold': 'strong-hold',
+      'map:portal:portalbreak': 'portal-break', 'map:inventory:0': 'blaze-bed',
+      'map:inventory:1': 'blaze-tnt', 'map:inventory:2': 'blaze-bed-and-tnt',
+      'map:inventory:3': 'blaze-bed-and-tnt', 'map:inventory:4': 'into-fort',
+      'map:zero_practice_loadouts:0': 'zero', 'map:zero_practice_loadouts:1': 'zero',
+      'map:zero_practice_loadouts:2': 'zero', 'map:zero_practice_loadouts:3': 'zero',
+      'map:zero_practice_loadouts:4': 'zero',
+      'map:bastion:1': 'nether-terrain', 'map:bastion:2': 'nether-terrain', 'map:bastion:3': 'nether-terrain',
+    }
+    for (const [id, scenario] of Object.entries(expected)) {
+      expect(destinationLayout(DESTINATIONS.find((entry) => entry.id === id)!, workspace)?.id, id).toBe(`template-${scenario}`)
+    }
+    const destination = DESTINATIONS.find((entry) => entry.id === 'mpk:0')!
+    const layout = destinationLayout(destination, workspace)!
+    layout.name = 'My renamed terrain'
+    layout.slots[8].items = [{ id: 'iron-axe', name: 'Iron axe', sprite: '' }]
+    expect(resolveHotbar(destination, workspace)[8]?.id).toBe('minecraft:iron_axe')
+    workspace.destinations[destination.id] = { layoutId: workspace.defaultLayoutId, overrides: { 8: null } }
+    const saved = new Map<string, string>()
+    saveWorkspace(workspace, { setItem: (key, value) => { saved.set(key, value) } })
+    const restored = loadWorkspace({ getItem: (key) => saved.get(key) ?? null })
+    expect(destinationLayout(destination, restored)?.id).toBe(workspace.defaultLayoutId)
+    expect(resolveHotbar(destination, restored)[8]).toBeNull()
+    restored.destinations[destination.id].layoutId = undefined
+    expect(destinationLayout(destination, restored)?.name).toBe('My renamed terrain')
+    expect(resolveHotbar(destination, restored)[8]).toBeNull()
+    const deleted = deleteLayout(restored, layout.id)
+    expect(destinationLayout(destination, deleted)?.id).toBe(deleted.defaultLayoutId)
+    expect(destinationLayout(DESTINATIONS.find((entry) => entry.id === 'map:portal:custom')!, workspace)?.id).toBe(workspace.defaultLayoutId)
+  })
+
   it('matches flex priorities, reserves original positions, and preserves every supplied stack', () => {
     const workspace = createWorkspace()
     const original = DESTINATIONS[0]
+    workspace.destinations[original.id] = { layoutId: workspace.defaultLayoutId, overrides: {} }
     const result = resolveHotbar(original, workspace)
     expect(result[0]?.id).toBe('minecraft:iron_pickaxe')
     expect(result[1]?.id).toBe('minecraft:iron_axe')
@@ -26,6 +63,7 @@ describe('practice hotbars', () => {
     expect(flexible[4]?.id).toBe('minecraft:gold_block')
     expect(flexible[2]?.id).toBe('minecraft:obsidian')
     const random = DESTINATIONS.find((entry) => entry.id === 'map:inventory:3')!
+    workspace.destinations[random.id] = { layoutId: workspace.defaultLayoutId, overrides: {} }
     expect(resolveHotbar(random, workspace)[4]?.alternatives).toContain('minecraft:white_bed')
   })
 
@@ -52,9 +90,15 @@ describe('practice hotbars', () => {
   it('exports every MPK barrel with exact slot commands and intact original triggers', async () => {
     const source = readFileSync('public/templates/mpk-0.6.nbt')
     const workspace = createWorkspace()
+    workspace.layouts.find((layout) => layout.id === 'template-nether-terrain')!.slots[8].items = [{ id: 'iron-axe', name: 'Iron axe', sprite: '' }]
     workspace.destinations['mpk:0'] = { overrides: { 0: null, 1: { id: 'minecraft:diamond_pickaxe', count: 1 } } }
     const original = await read(source)
     const output = await read(await exportMinecraft(source, 'mpk', workspace))
+    for (const id of ['mpk:0', 'mpk:1']) {
+      const destination = DESTINATIONS.find((entry) => entry.id === id)!
+      const actual = inventoryAt(output.data, destination.path) as CompoundTag[]
+      expect(actual.find((item) => Number(item.Slot) === 8)?.id).toBe('minecraft:iron_axe')
+    }
     expect(output.compression).toBeNull()
     for (const destination of DESTINATIONS.filter((entry) => entry.target === 'mpk')) {
       const expected = resolveHotbar(destination, workspace)
@@ -87,6 +131,7 @@ describe('practice hotbars', () => {
   it('patches native map inventories and selected copies while retaining all unrelated files and NBT', async () => {
     const source = readFileSync('.cache/templates/mcsr-2.0.0.zip')
     const workspace = createWorkspace()
+    workspace.layouts.find((layout) => layout.id === 'template-blinding')!.slots[8].items = [{ id: 'obsidian', name: 'Obsidian', sprite: '' }]
     const alternate = structuredClone(workspace.layouts[0])
     alternate.id = 'alternate'
     alternate.slots[0].items = [{ id: 'ender-pearl', name: 'Pearls', sprite: '' }]
@@ -96,6 +141,9 @@ describe('practice hotbars', () => {
     const generated = unzipSync(await exportMinecraft(source, 'map', workspace))
     const original = unzipSync(source)
     const prefix = 'Hotbar Lab - MCSR Practice/'
+    const blind = DESTINATIONS.find((entry) => entry.id === 'map:portal:blind')!
+    const blindInventory = inventoryAt((await read(generated[prefix + blind.file])).data, blind.path) as CompoundTag[]
+    expect(blindInventory.find((item) => Number(item.Slot) === 8)?.id).toBe('minecraft:obsidian')
     expect(generated[`${prefix}level.dat`]).toBeDefined()
     const changed = new Set(DESTINATIONS.filter((entry) => entry.target === 'map').map((entry) => entry.file))
     expect(Object.keys(generated).length).toBe(Object.keys(original).length)

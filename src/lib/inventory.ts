@@ -31,6 +31,41 @@ const itemsById = new Map(registry.map((item) => [item.id, item]))
 export const itemName = (id: string) => itemsById.get(id)?.name ?? id
 export const stackLimit = (id: string) => itemsById.get(id)?.stackSize
 
+const DEFAULT_SCENARIOS: Record<string, string> = {
+  'mpk:0': 'nether-terrain',
+  'mpk:1': 'nether-terrain',
+  'mpk:2': 'into-fort',
+  'mpk:3': 'blinding',
+  'mpk:4': 'strong-hold',
+  'mpk:5': 'zero',
+  'map:portal:blind': 'blinding',
+  'map:portal:stronghold': 'strong-hold',
+  'map:portal:portalbreak': 'portal-break',
+  'map:inventory:0': 'blaze-bed',
+  'map:inventory:1': 'blaze-tnt',
+  'map:inventory:2': 'blaze-bed-and-tnt',
+  'map:inventory:3': 'blaze-bed-and-tnt',
+  'map:inventory:4': 'into-fort',
+  'map:zero_practice_loadouts:0': 'zero',
+  'map:zero_practice_loadouts:1': 'zero',
+  'map:zero_practice_loadouts:2': 'zero',
+  'map:zero_practice_loadouts:3': 'zero',
+  'map:zero_practice_loadouts:4': 'zero',
+  'map:bastion:1': 'nether-terrain',
+  'map:bastion:2': 'nether-terrain',
+  'map:bastion:3': 'nether-terrain',
+}
+
+export function defaultDestinationLayout(destination: Destination, workspace: Workspace) {
+  return workspace.layouts.find((layout) => layout.id === `template-${DEFAULT_SCENARIOS[destination.id]}`)
+    ?? workspace.layouts.find((layout) => layout.id === workspace.defaultLayoutId)
+}
+
+export function destinationLayout(destination: Destination, workspace: Workspace) {
+  const layoutId = workspace.destinations[destination.id]?.layoutId
+  return layoutId ? workspace.layouts.find((layout) => layout.id === layoutId) : defaultDestinationLayout(destination, workspace)
+}
+
 const SHEET_ALTERNATIVES: Record<string, string[]> = {
   'leaves-planks': ['leaves', 'oak-planks'], 'salmon-cod': ['cooked-salmon', 'cooked-cod'],
   'bucket-food': ['empty-bucket', 'apple'], 'bed-food': ['red-bed', 'apple'],
@@ -76,7 +111,7 @@ function matches(preference: ItemRef, stack: Stack): boolean {
 
 export function resolveHotbar(destination: Destination, workspace: Workspace): Array<Stack | null> {
   const settings = workspace.destinations[destination.id]
-  const layout = workspace.layouts.find((entry) => entry.id === (settings?.layoutId ?? workspace.defaultLayoutId))
+  const layout = destinationLayout(destination, workspace)
   if (!layout) throw new Error(`${destination.name}: assigned layout is missing.`)
   const result: Array<Stack | null> = Array(9).fill(null)
   const remaining = destination.items.map((item) => ({ ...item, sourceSlot: item.slot }))

@@ -3,6 +3,37 @@ import { readFile } from 'node:fs/promises'
 import { read } from 'nbtify'
 import { unzipSync } from 'fflate'
 
+test('shows automatic scenario matches and the barrel icon, and preserves manual selections', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Export', exact: true }).click()
+  const mpk = page.getByRole('region', { name: 'MPK export', exact: true })
+  const icon = mpk.locator('img.export-barrel-icon')
+  await expect(icon).toBeVisible()
+  await expect(icon).toHaveJSProperty('naturalWidth', 300)
+  for (const [id, name] of [
+    ['mpk:0', 'Nether terrain'], ['mpk:1', 'Nether terrain'], ['mpk:2', 'Into fort'],
+    ['mpk:3', 'Blinding'], ['mpk:4', 'Stronghold'], ['mpk:5', 'Zero'],
+  ]) {
+    await page.getByLabel('Preset barrel', { exact: true }).selectOption(id)
+    await expect(page.getByLabel('mpk assigned scenario').locator('option:checked')).toHaveText(`Automatic — ${name}`)
+    await expect(page.getByLabel('Preset barrel', { exact: true }).locator('option:checked')).toContainText(`— ${name}`)
+  }
+  await page.getByLabel('Map loadout', { exact: true }).selectOption('map:portal:blind')
+  await expect(page.getByLabel('map assigned scenario').locator('option:checked')).toHaveText('Automatic — Blinding')
+  await page.getByLabel('mpk assigned scenario').selectOption('template-into-fort')
+  await page.reload()
+  await page.getByRole('button', { name: 'Export', exact: true }).click()
+  await page.getByLabel('Preset barrel', { exact: true }).selectOption('mpk:5')
+  await expect(page.getByLabel('mpk assigned scenario')).toHaveValue('template-into-fort')
+  await page.getByLabel('mpk assigned scenario').selectOption('')
+  await expect(page.getByLabel('mpk assigned scenario').locator('option:checked')).toHaveText('Automatic — Zero')
+  await page.screenshot({ path: 'artifacts/export-defaults-desktop.png', fullPage: true })
+  await page.setViewportSize({ width: 390, height: 844 })
+  await expect(icon).toBeVisible()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+  await page.screenshot({ path: 'artifacts/export-defaults-mobile.png', fullPage: true })
+})
+
 test('saves scenario layouts, shares keys, customizes destinations, and downloads working binary files', async ({ page }) => {
   test.setTimeout(90_000)
   await page.goto('/')
