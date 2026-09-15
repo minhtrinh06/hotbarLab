@@ -1,0 +1,98 @@
+<template id="scene-practice">
+  <style>
+[id^="scene-practice-"]{font-family:Inter;color:#EEEADE}
+
+    @font-face { font-family: Inter; src: url('assets/inter-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: Inter; src: url('assets/inter-700.woff2') format('woff2'); font-weight: 700; }
+    #root, #scene-practice { position: relative; width: 100%; height: 100%; overflow: hidden; container-type: size; font-family: Inter; color: #EEEADE; }
+    [id="scene-practice-bg"] { position: absolute; inset: 0; background: #141714; }
+    [id="scene-practice-brand"] { position: absolute; left: 96px; top: 68px; display: flex; align-items: center; gap: 16px; height: 40px; font-size: 24px; font-weight: 700; letter-spacing: 3px; }
+    [id="scene-practice-brand"] img { width: 40px; height: 40px; }
+    [id="scene-practice-brand"] span { color: #A5C76B; }
+    [id="scene-practice-stage"] { position: absolute; right: 96px; top: 68px; border: 1px solid rgba(165,199,107,.2); background: rgba(165,199,107,.08); border-radius: 100px; padding: 12px 20px; color: #A5C76B; font-size: 18px; font-weight: 700; letter-spacing: 2px; }
+    [id="scene-practice-eyebrow"] { position: absolute; left: 96px; top: 220px; margin: 0; font-size: 23px; font-weight: 700; letter-spacing: 3px; color: #A5C76B; }
+    [id="scene-practice-headline"] { position: absolute; left: 96px; top: 265px; width: 490px; margin: 0; font-size: 72px; line-height: 1.08; letter-spacing: -1.44px; font-weight: 700; }
+    [id="scene-practice-support"] { position: absolute; left: 96px; top: 570px; width: 490px; min-height: 140px; font-size: 28px; line-height: 1.5; color: #989F94; }
+    [id="scene-practice-panel"] { position: absolute; left: 640px; top: 180px; width: 1200px; height: 750px; border-radius: 14px; overflow: hidden; outline: 1.5px solid rgba(165,199,107,.2); }
+    [id="scene-practice-panel"] > img { position: absolute; inset: 0; width: 1200px; height: 750px; object-fit: contain; }
+    [id="scene-practice-button"] { position: absolute; left: 1039.167px; top: 178.333px; width: 125px; height: 36.667px; background-image: url('assets/practice.png'); background-size: 1200px 750px; background-position: -1039.167px -178.333px; transform-origin: center; }
+    [id="scene-practice-cursor"] { position: absolute; left: 0; top: 0; width: 44px; height: 44px; pointer-events: none; z-index: 999; transform-origin: 5.5px 5.13px; }
+    [id="scene-practice-cursor"] svg { width: 100%; height: 100%; }
+    [id="scene-practice-ripple"] { position: absolute; left: 1090.667px; top: 185.667px; width: 22px; height: 22px; box-sizing: border-box; border: 2px solid #EEEADE; border-radius: 50%; pointer-events: none; z-index: 998; }
+    [id="scene-practice-chapters"] { position: absolute; left: 96px; top: 880px; display: flex; gap: 30px; color: #989F94; font-size: 21px; }
+    [id="scene-practice-chapters"] strong { color: #A5C76B; font-weight: 700; }
+    [id="scene-practice-caption"] { position: absolute; left: 96px; top: 960px; width: 1728px; min-height: 48px; font-size: 27px; line-height: 1.4; color: #EEEADE; }
+    [id="scene-practice-progress-track"] { position: absolute; left: 96px; top: 1032px; width: 1728px; height: 3px; border-radius: 6px; background: rgba(165,199,107,.08); }
+    [id="scene-practice-progress-fill"] { width: 100%; height: 3px; background: #A5C76B; transform-origin: left center; }
+  </style>
+  <div data-hf-id="hf-6509" id="scene-practice" data-composition-id="scene-practice" data-width="1920" data-height="1080" data-duration="11">
+    <div data-hf-id="hf-a790" id="scene-practice-bg" class="clip" data-start="0" data-duration="11" data-track-index="0"></div>
+    <div data-hf-id="hf-kbsj" id="scene-practice-brand"><img data-hf-id="hf-9n6s" src="assets/favicon.svg" alt=""><div data-hf-id="hf-hsws">HOTBAR <span data-hf-id="hf-f8ww">LAB</span></div></div>
+    <div data-hf-id="hf-4ums" id="scene-practice-stage">EARLY DEVELOPMENT</div>
+    <p data-hf-id="hf-jq8g" id="scene-practice-eyebrow">02 / PRACTICE</p>
+    <h1 data-hf-id="hf-rguy" id="scene-practice-headline">Turn a plan into a reflex.</h1>
+    <div data-hf-id="hf-s5aj" id="scene-practice-support">Your items. Your keys. Immediate feedback.</div>
+    <div data-hf-id="hf-ru6u" id="scene-practice-panel">
+      <img data-hf-id="hf-i8qz" id="scene-practice-setup" src="assets/practice.png" alt="Practice setup with prompt pool and session length controls">
+      <div data-hf-id="hf-c4q1" id="scene-practice-button" aria-hidden="true"></div>
+      <img data-hf-id="hf-0bwe" id="scene-practice-running" src="assets/practice-prompt.png" alt="A real running practice prompt asking for the key assigned to Bed">
+      <div data-hf-id="hf-czt7" id="scene-practice-ripple" aria-hidden="true"></div>
+      <div data-hf-id="hf-jymr" id="scene-practice-cursor" aria-hidden="true"><svg data-hf-id="hf-fpqu" viewBox="0 0 24 24" width="44" height="44"><path data-hf-id="hf-hxlv" d="M3 2.8 20.6 14 12.8 15.5 9 22 3 2.8Z" fill="#EEEADE" stroke="rgba(0,0,0,.45)" stroke-width="1.4" /></svg></div>
+    </div>
+    <div data-hf-id="hf-5cei" id="scene-practice-chapters"><span data-hf-id="hf-qppq">Plan</span><strong data-hf-id="hf-aut3">Practice</strong><span data-hf-id="hf-rmdz">Export</span></div>
+    <div data-hf-id="hf-agzl" id="scene-practice-caption">Choose your prompts and a 10, 20 or 50-prompt session.</div>
+    
+  </div>
+  <script>
+    (() => {
+      const root = document.getElementById('scene-practice');
+      const el = (name) => root.querySelector('[id="scene-practice-' + name + '"]');
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines['scene-practice'] = tl;
+      tl.set(el('running'), { opacity: 0 }, 0);
+      tl.set(el('ripple'), { opacity: 0, scale: 0 }, 0);
+      tl.set(el('cursor'), { opacity: 0, x: 840, y: 610 }, 0);
+      tl.fromTo(el('headline'), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 0);
+      tl.fromTo(el('eyebrow'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .4, ease: 'power2.out' }, .1);
+      tl.fromTo(el('support'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .55, ease: 'power2.out' }, 6);
+      tl.to(el('cursor'), { opacity: 1, duration: .15 }, 3);
+      // Screenshot is 1440 by 900, rendered at 5/6 scale. Button centre is native (1322,236).
+      // Account for the arrow's SVG tip offset so the actual pointer tip hits the centre.
+      tl.to(el('cursor'), { x: 1096.167, y: 191.534, duration: .8, ease: 'power2.inOut' }, 3.15);
+      tl.to(el('cursor'), { scale: .85, duration: .08, ease: 'power2.in' }, 4.1);
+      tl.to(el('button'), { scale: .95, duration: .08, ease: 'power2.in' }, 4.1);
+      tl.to(el('cursor'), { scale: 1, duration: .08, ease: 'power2.out' }, 4.18);
+      tl.to(el('button'), { scale: 1, duration: .08, ease: 'power2.out' }, 4.18);
+      tl.fromTo(el('ripple'), { scale: 0, opacity: 1 }, { scale: 4, opacity: 0, duration: .65, ease: 'power2.out', immediateRender: false }, 4.14);
+      tl.set(el('running'), { opacity: 1 }, 4.4);
+      tl.to(el('cursor'), { x: 1150, y: 256, duration: .45, ease: 'power2.inOut' }, 4.9);
+      const CONTENT = [
+        { body: 'Choose your prompts and a 10, 20 or 50-prompt session.', seconds: 6 },
+        { body: 'Recognise the item. Press its assigned key.', seconds: 2.5 },
+        { body: 'Review accuracy, reaction times and missed bindings.', seconds: 2.5 }
+      ];
+      const BASE_DURATION = .6;
+      const SEC_PER_CHAR = .03;
+      let cumulative = 0;
+      const TIMELINE = CONTENT.map(entry => {
+        const hold = entry.seconds - BASE_DURATION - entry.body.length * SEC_PER_CHAR;
+        const duration = BASE_DURATION + entry.body.length * SEC_PER_CHAR + hold;
+        const start = cumulative;
+        cumulative += duration;
+        return { ...entry, start, end: cumulative };
+      });
+      const driver = { t: 0 };
+      let lastBody = '';
+      tl.to(driver, { t: 11, duration: 11, ease: 'none', onUpdate: () => {
+        let active = TIMELINE[0];
+        for (let i = TIMELINE.length - 1; i >= 0; i--) {
+          if (driver.t >= TIMELINE[i].start) { active = TIMELINE[i]; break; }
+        }
+        if (active.body !== lastBody) { el('caption').textContent = active.body; lastBody = active.body; }
+      } }, 0);
+      
+    })();
+  </script>
+</template>
+

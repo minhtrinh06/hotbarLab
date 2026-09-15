@@ -1,0 +1,9 @@
+.hyperframes/
+.media/
+capture/
+catalog-search.json
+snapshots/
+renders/
+CLAUDE.md
+AGENTS.md
+.thumbnails/
