@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { createWorkspace, deleteLayout, loadWorkspace, saveWorkspace } from './storage'
 import { DESTINATIONS, destinationLayout, resolveHotbar, type Destination } from './inventory'
 import { exportMinecraft, inventoryAt } from './minecraft-export'
+import { catalogItem, ITEM_CATALOG } from '../data/catalog'
 
 describe('practice hotbars', () => {
   it('automatically matches practice scenarios, keeps manual assignments, and falls back after deletion', () => {
@@ -45,7 +46,7 @@ describe('practice hotbars', () => {
 
   it('matches flex priorities, reserves original positions, and preserves every supplied stack', () => {
     const workspace = createWorkspace()
-    const original = DESTINATIONS[0]
+    const original = { ...DESTINATIONS[0], target: 'map' }
     workspace.destinations[original.id] = { layoutId: workspace.defaultLayoutId, overrides: {} }
     const result = resolveHotbar(original, workspace)
     expect(result[0]?.id).toBe('minecraft:iron_pickaxe')
@@ -70,6 +71,7 @@ describe('practice hotbars', () => {
   it('keeps controls, empty presets, special data, and validates exact overrides', () => {
     const workspace = createWorkspace()
     const destination = DESTINATIONS.find((entry) => entry.id === 'mpk:2')!
+    destinationLayout(destination, workspace)!.slots[6].items = [catalogItem('fire-resistance')]
     const automatic = resolveHotbar(destination, workspace)
     const potionSlot = automatic.findIndex((item) => item?.potion)
     expect(automatic[potionSlot]?.special).toBe(true)
@@ -126,6 +128,54 @@ describe('practice hotbars', () => {
     const originalRow = (original.data as CompoundTag)['0'] as CompoundTag[]
     const outputRow = (output.data as CompoundTag)['0'] as CompoundTag[]
     expect(outputRow.slice(6)).toEqual(originalRow.slice(6))
+  })
+
+  it('exports a custom Zero scenario into the preview, chest and AUTO book without preset leftovers', async () => {
+    const workspace = createWorkspace()
+    const layout = workspace.layouts.find((entry) => entry.id === 'template-zero')!
+    const cues = ['iron-pickaxe', 'red-bed', 'dirt', 'oak-boat', 'respawn-anchor', 'glowstone', 'obsidian', 'ender-pearl', 'bow']
+    layout.slots = layout.slots.map((slot, index) => ({ ...slot, flex: false, items: [catalogItem(cues[index])] }))
+    const destination = DESTINATIONS.find((entry) => entry.id === 'mpk:5')!
+    const expected = ['iron_pickaxe', 'red_bed', 'nether_bricks', 'oak_boat', 'respawn_anchor', 'glowstone', 'obsidian', 'ender_pearl', 'bow'].map((id) => `minecraft:${id}`)
+    expect(resolveHotbar(destination, workspace).map((stack) => stack?.id)).toEqual(expected)
+    workspace.destinations[destination.id] = { layoutId: layout.id, overrides: {} }
+    const source = readFileSync('public/templates/mpk-0.6.nbt')
+    const output = await read(await exportMinecraft(source, 'mpk', workspace))
+    const inventory = inventoryAt(output.data, destination.path) as CompoundTag[]
+    const triggers = inventoryAt(output.data, destination.path.slice(0, 5)) as CompoundTag[]
+    const pages = (triggers.at(-1)!.tag as CompoundTag).pages as string[]
+    for (const [slot, id] of expected.entries()) {
+      expect(inventory.find((item) => Number(item.Slot) === slot)?.id).toBe(id)
+      expect(pages[slot]).toContain(`replaceitem entity @p hotbar.${slot} ${id}`)
+    }
+    expect(inventory.find((item) => Number(item.Slot) === 4)?.tag).toEqual({ HotbarLabSlot: expect.any(Number) })
+    layout.slots[3].items = []
+    layout.slots[4].items = [{ id: 'note', name: 'My note', sprite: '', custom: true }]
+    expect(resolveHotbar(destination, workspace).slice(3, 5)).toEqual([null, null])
+    workspace.destinations[destination.id].overrides[4] = { id: 'minecraft:respawn_anchor', count: 4 }
+    expect(resolveHotbar(destination, workspace)[4]).toEqual({ slot: 4, id: 'minecraft:respawn_anchor', count: 4 })
+  })
+
+  it('can create all catalogue items, mapped custom items, and a functional fire resistance potion', async () => {
+    const workspace = createWorkspace()
+    const destination = { ...DESTINATIONS[0], items: [] }
+    const layout = destinationLayout(destination, workspace)!
+    layout.slots = layout.slots.map((slot) => ({ ...slot, items: [] }))
+    for (const item of ITEM_CATALOG) {
+      layout.slots[0].items = [item]
+      expect(resolveHotbar(destination, workspace)[0], item.id).not.toBeNull()
+    }
+    layout.slots[0].items = [{ id: 'custom', name: 'Custom', sprite: '', custom: true, minecraftId: 'minecraft:diamond_pickaxe' }]
+    expect(resolveHotbar(destination, workspace)[0]?.id).toBe('minecraft:diamond_pickaxe')
+    layout.slots[0].items[0].minecraftId = 'minecraft:invalid'
+    expect(() => resolveHotbar(destination, workspace)).toThrow('valid Minecraft')
+    layout.slots[0].items = [catalogItem('fire-resistance')]
+    const output = await read(await exportMinecraft(readFileSync('public/templates/mpk-0.6.nbt'), 'mpk', workspace))
+    const inventory = inventoryAt(output.data, destination.path) as CompoundTag[]
+    expect(inventory[0].id).toBe('minecraft:potion')
+    expect((inventory[0].tag as CompoundTag).Potion).toBe('minecraft:fire_resistance')
+    const triggers = inventoryAt(output.data, destination.path.slice(0, 5)) as CompoundTag[]
+    expect(((triggers.at(-1)!.tag as CompoundTag).pages as string[])[0]).toContain('Potion:"minecraft:fire_resistance"')
   })
 
   it('patches native map inventories and selected copies while retaining all unrelated files and NBT', async () => {

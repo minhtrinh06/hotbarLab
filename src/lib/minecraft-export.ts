@@ -17,7 +17,8 @@ function put(root: unknown, path: (string | number)[], value: unknown) {
 
 function materialize(stack: Stack, original: CompoundTag[]): CompoundTag {
   const source = stack.sourceSlot === undefined ? undefined : original.find((item) => Number(item.Slot) === stack.sourceSlot)
-  return { ...source, id: stack.id, Slot: new Int8(stack.slot), Count: new Int8(stack.count) }
+  return { ...source, id: stack.id, Slot: new Int8(stack.slot), Count: new Int8(stack.count),
+    ...(stack.potion ? { tag: { ...(source?.tag as CompoundTag | undefined), Potion: stack.potion } } : {}) }
 }
 
 export async function verifyTemplate(bytes: Uint8Array, target: ExportTarget) {

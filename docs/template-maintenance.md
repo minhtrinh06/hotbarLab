@@ -9,6 +9,23 @@ downloads (merge this rule with any existing policy):
 [{ "AllowedOrigins": ["*"], "AllowedMethods": ["GET", "HEAD"] }]
 ```
 
+After changing CORS, purge the hostname `assets.hotbarlab.com`
+from the `hotbarlab.com` zone's **Caching → Configuration → Custom Purge → Hostname**.
+Use a hostname purge to clear all cached response variants; a URL-only purge may
+leave the stale CORS response cached.
+Previously cached responses can lack CORS headers even when the bucket policy is
+correct, causing the export to show “Failed to fetch”. See
+[Cloudflare's CORS guidance](https://developers.cloudflare.com/r2/buckets/cors/).
+
+Verify the normal URL (without a cache-busting query) after purging:
+
+```bash
+curl --head --header 'Origin: https://hotbarlab.com' https://assets.hotbarlab.com/mcsr-2.0.0.zip
+```
+
+The response must include `Access-Control-Allow-Origin: *` (or the requesting
+origin). Then download a custom practice map from the live site's Export view.
+
 ## Template maintenance
 
 MiniPracticeKit is pinned in `public/templates`. Keep the MCSR ZIP in the ignored

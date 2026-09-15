@@ -78,6 +78,21 @@ const SHEET_ALTERNATIVES: Record<string, string[]> = {
   'animal-meat': ['cooked-beef', 'cooked-porkchop', 'cooked-mutton', 'cooked-chicken'],
 }
 
+function scenarioStack(preference: ItemRef, slot: number): Stack | null {
+  if (preference.custom && !preference.minecraftId) return null
+  const cue = SHEET_ALTERNATIVES[preference.id]?.[0] ?? preference.id
+  const aliases: Record<string, string> = {
+    'empty-bucket': 'bucket', leaves: 'oak_leaves', 'gold-pickaxe': 'golden_pickaxe',
+    'nether-brick': 'nether_bricks', steak: 'cooked_beef',
+    'blackstone-bricks': 'polished_blackstone_bricks', 'non-generic-apple': 'apple',
+    bricks: 'dirt', 'fire-resistance': 'potion',
+  }
+  const id = preference.minecraftId ?? `minecraft:${aliases[cue] ?? cue.replaceAll('-', '_')}`
+  if (!stackLimit(id)) throw new Error(`${preference.name}: choose a valid Minecraft 1.16.1 item.`)
+  return { slot, id, count: 1,
+    ...(!preference.minecraftId && cue === 'fire-resistance' ? { potion: 'minecraft:fire_resistance' } : {}) }
+}
+
 function matches(preference: ItemRef, stack: Stack): boolean {
   if (stack.alternatives?.some((id) => matches(preference, { ...stack, id, alternatives: undefined }))) return true
   if (preference.minecraftId) return stack.id === preference.minecraftId
@@ -128,12 +143,21 @@ export function resolveHotbar(destination: Destination, workspace: Workspace): A
       const index = remaining.findIndex((stack) => matches(preference, stack))
       if (index !== -1) { place(target, index); break }
     }
+    if (destination.target === 'mpk' && !result[target]) {
+      for (const preference of slot.items) {
+        const stack = scenarioStack(preference, target)
+        if (stack) { result[target] = stack; break }
+      }
+    }
   }
-  // Reserve original positions before filling gaps, so an early collision doesn't move unrelated stacks.
-  for (const item of [...remaining]) {
-    if (!result[item.slot]) place(item.slot, remaining.findIndex((entry) => entry.sourceSlot === item.sourceSlot))
+  if (destination.target !== 'mpk') {
+    // Maps retain supplied stacks; MPK follows the scenario, including empty slots.
+    // Reserve original positions before filling gaps, so collisions don't move unrelated stacks.
+    for (const item of [...remaining]) {
+      if (!result[item.slot]) place(item.slot, remaining.findIndex((entry) => entry.sourceSlot === item.sourceSlot))
+    }
+    while (remaining.length) place(result.findIndex((item) => item === null), 0)
   }
-  while (remaining.length) place(result.findIndex((item) => item === null), 0)
 
   for (const [slotKey, override] of Object.entries(settings?.overrides ?? {})) {
     const slot = Number(slotKey)

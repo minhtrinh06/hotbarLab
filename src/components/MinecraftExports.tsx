@@ -92,7 +92,9 @@ function ExportPanel({ target, workspace, onChange }: {
       <option value="">Automatic — {defaultDestinationLayout(destination, workspace)?.name}</option>
       {workspace.layouts.map((layout) => <option key={layout.id} value={layout.id}>{layout.name}</option>)}
     </select></label>
-    <p className="field-help">Rearrange supplied hotbar items using the scenario’s priority order. Exact overrides apply to this destination. Other inventory slots and armor are retained.</p>
+    <p className="field-help">{target === 'mpk'
+      ? 'Uses the assigned scenario’s hotbar slots. Flex pools prefer matching preset items, otherwise the first mapped item. Matching items keep their quantities; new items start at 1. Customize to change items or quantities.'
+      : 'Rearrange supplied hotbar items using the scenario’s priority order.'} Exact overrides apply to this destination. Other inventory slots and armor are retained.</p>
     {!destination.items.length && <p className="field-help">This saved loadout starts empty. Use Customize to add exact items.</p>}
     {previewError && <p role="alert" className="inline-error">{previewError}</p>}
     <div className="export-slots" key={destinationId}>{slots.map((stack, slot) => <SlotOverride key={slot} slot={slot} stack={stack} override={settings.overrides[slot]} onChange={(override) => {

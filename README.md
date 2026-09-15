@@ -52,6 +52,11 @@ Get immediate feedback, then review accuracy, median/best/slowest reaction times
 
 Practice destinations automatically use the matching scenario, falling back to your default when needed. Assign a scenario manually or override an exact item, quantity, or empty slot in the nine-slot preview.
 
+MPK follows the assigned scenario's slots, adding missing items and keeping empty
+slots empty. Matching preset items retain their quantities and special data; new
+items start at 1. Flex pools prefer matching preset items, then fall back to their
+first mapped item. The practice map rearranges its supplied loadout items.
+
 ![Export practice loadouts with automatic scenario assignments and exact slot customization](docs/media/export.png)
 
 Templates download when requested; the MCSR map is about **93 MB**. Exports are generated in your browser, with progress, cancellation, and retry. Your scenarios are not uploaded.

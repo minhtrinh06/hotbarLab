@@ -3,6 +3,33 @@ import { readFile } from 'node:fs/promises'
 import { read } from 'nbtify'
 import { unzipSync } from 'fflate'
 
+test('custom Zero items appear in the MPK preview and downloaded AUTO commands', async ({ page }) => {
+  await page.goto('/')
+  await page.locator('.scenario-trigger').click()
+  await page.getByRole('dialog', { name: 'Choose scenario' }).getByRole('button', { name: 'Zero', exact: true }).click()
+  for (const [index, name] of ['Pickaxe', 'Bed', 'Blocks', 'Boat', 'Respawn Anchor', 'Glowstone', 'Obsidian', 'Pearls', 'Bow'].entries()) {
+    await page.getByRole('button', { name: new RegExp(`Edit slot ${index + 1}:`) }).click()
+    await page.getByLabel('Add from catalogue').fill(name)
+    await page.getByTitle(`Add ${name}`, { exact: true }).first().click()
+  }
+  await page.reload()
+  await expect(page.getByRole('button', { name: /Edit slot 5: Respawn Anchor/ })).toBeVisible()
+  await page.getByRole('button', { name: 'Export', exact: true }).click()
+  await page.getByLabel('Preset barrel', { exact: true }).selectOption('mpk:5')
+  const panel = page.getByRole('region', { name: 'MPK export', exact: true })
+  for (const [index, name] of ['Iron Pickaxe', 'Red Bed', 'Nether Bricks', 'Oak Boat', 'Respawn Anchor', 'Glowstone', 'Obsidian', 'Ender Pearl', 'Bow'].entries()) {
+    await expect(panel.getByLabel(`Export slot ${index + 1}`, { exact: true })).toContainText(name)
+  }
+  await page.getByLabel('mpk assigned scenario').selectOption('template-zero')
+  await expect(panel.getByLabel('Export slot 5', { exact: true })).toContainText('Respawn Anchor × 1')
+  const download = page.waitForEvent('download')
+  await panel.getByRole('button', { name: 'Download custom MPK', exact: true }).click()
+  const file = await download
+  const nbt = (await read(await readFile((await file.path())!))).data as any
+  const barrel = nbt['0'].filter((item: any) => item.id === 'minecraft:barrel')[5]
+  expect(barrel.tag.BlockEntityTag.Items.at(-1).tag.pages[4]).toBe('replaceitem entity @p hotbar.4 minecraft:respawn_anchor 1')
+})
+
 test('shows automatic scenario matches and the barrel icon, and preserves manual selections', async ({ page }) => {
   await page.goto('/')
   await page.getByRole('button', { name: 'Export', exact: true }).click()
