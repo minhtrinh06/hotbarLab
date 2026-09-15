@@ -48,7 +48,9 @@ test('saves scenario layouts, shares keys, customizes destinations, and download
   expect(barrels[2].tag.BlockEntityTag.Items.at(-1).tag.pages[0]).toBe('replaceitem entity @p hotbar.0 minecraft:obsidian 12')
 
   const mapDownload = page.waitForEvent('download', { timeout: 60_000 })
+  const mapRequest = page.waitForRequest('https://assets.hotbarlab.com/mcsr-2.0.0.zip')
   await page.getByRole('button', { name: 'Download custom practice map', exact: true }).click()
+  await mapRequest
   const zip = await mapDownload
   const files = unzipSync(await readFile((await zip.path())!))
   expect(files['Hotbar Lab - MCSR Practice/level.dat']).toBeDefined()

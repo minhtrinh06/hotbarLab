@@ -54,12 +54,30 @@ in a browser worker with SHA-256 verification, progress, cancellation, and retry
 Changing a layout cancels an export already in progress, preventing stale downloads.
 No layout data is uploaded and no backend is needed.
 
+The map is downloaded from `https://assets.hotbarlab.com/mcsr-2.0.0.zip` in the
+`hotbarlab` R2 bucket. MiniPracticeKit remains a bundled asset. The custom bucket
+domain must be active, and the bucket's **Settings → CORS Policy** must allow browser
+downloads (merge this rule with any existing policy):
+
+```json
+[{ "AllowedOrigins": ["*"], "AllowedMethods": ["GET", "HEAD"] }]
+```
+
 ## Template maintenance
 
-Pinned originals are in `public/templates`. Source links, versions, checksums, and
-explicit destination paths are recorded in `src/data/templates.json`. To deliberately
-update a template, inspect its native inventory loading/saving behavior, replace the
-asset, and regenerate metadata:
+MiniPracticeKit is pinned in `public/templates`. Keep the MCSR ZIP in the ignored
+`.cache/templates/mcsr-2.0.0.zip` for map export tests and metadata regeneration;
+never put it in `public`, where Vite would copy it into the Pages build.
+On a fresh checkout, download the test/maintenance copy once before running tests:
+
+```bash
+mkdir -p .cache/templates
+curl --fail --location --output .cache/templates/mcsr-2.0.0.zip https://assets.hotbarlab.com/mcsr-2.0.0.zip
+```
+
+Source links, versions, checksums, and explicit destination paths are recorded in
+`src/data/templates.json`. To deliberately update a template, inspect its native
+inventory loading/saving behavior, replace the asset, and regenerate metadata:
 
 ```bash
 node scripts/prepare-templates.mjs /path/to/minecraft-data/data/pc/1.16.1/items.json

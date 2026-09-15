@@ -3,6 +3,8 @@ dist/
 test-results/
 playwright-report/
 .cache/
+.codegraph/
+mcsr-*.zip
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts

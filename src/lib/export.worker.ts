@@ -6,7 +6,8 @@ self.onmessage = async (event: MessageEvent<{ target: ExportTarget; workspace: W
   try {
     const { target, workspace } = event.data
     self.postMessage({ progress: 'Downloading practice template…' })
-    const response = await fetch(`${import.meta.env.BASE_URL}templates/${TEMPLATES[target].file}`)
+    const base = target === 'map' ? 'https://assets.hotbarlab.com/' : `${import.meta.env.BASE_URL}templates/`
+    const response = await fetch(`${base}${TEMPLATES[target].file}`)
     if (!response.ok) throw new Error('Could not download the practice template. Check your connection and retry.')
     const bytes = await exportMinecraft(new Uint8Array(await response.arrayBuffer()), target, workspace,
       (progress) => self.postMessage({ progress }))

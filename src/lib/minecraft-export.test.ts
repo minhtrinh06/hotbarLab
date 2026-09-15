@@ -85,7 +85,7 @@ describe('practice hotbars', () => {
   })
 
   it('patches native map inventories and selected copies while retaining all unrelated files and NBT', async () => {
-    const source = readFileSync('public/templates/mcsr-2.0.0.zip')
+    const source = readFileSync('.cache/templates/mcsr-2.0.0.zip')
     const workspace = createWorkspace()
     const alternate = structuredClone(workspace.layouts[0])
     alternate.id = 'alternate'

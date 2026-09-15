@@ -7,7 +7,7 @@ import { unzipSync } from 'fflate'
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex')
 const mpk = readFileSync('public/templates/mpk-0.6.nbt')
-const map = readFileSync('public/templates/mcsr-2.0.0.zip')
+const map = readFileSync('.cache/templates/mcsr-2.0.0.zip')
 const files = unzipSync(map)
 const destinations = []
 const label = (text) => { try { return JSON.parse(text).text ?? text } catch { return text } }

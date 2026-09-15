@@ -1,7 +1,7 @@
 # Practice templates
 
-Original, unmodified source templates are included here so customization works without
-cross-origin downloads. Hotbar Lab is an independent customization tool.
+MiniPracticeKit is bundled here; the MCSR Practice Map is hosted in Cloudflare R2.
+Hotbar Lab is an independent customization tool using original, unmodified templates.
 
 - `mpk-0.6.nbt`: MiniPracticeKit v0.6 by Knawk.
   Source: https://github.com/Knawk/mc-MiniPracticeKit
