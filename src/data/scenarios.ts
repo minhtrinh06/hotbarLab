@@ -23,7 +23,7 @@ export function blankScenario(base: HotbarPlan, name: string): HotbarPlan {
 
 export function createScenarioLibrary(main: HotbarPlan): ScenarioLibrary {
   return { version: 1, activeId: 'main', defaultId: 'main', scenarios: [
-    { id: 'main', group: 'main', plan: { ...main, flexSpotsEnabled: main.flexSpotsEnabled ?? true } },
+    { id: 'main', group: 'main', plan: { ...main } },
     ...sheet.scenarios.map((scenario): SavedScenario => ({
       id: `template-${scenario.id}`, group: scenario.group as 'basic' | 'advanced',
       plan: blankScenario(main, scenarioLabel(scenario.name)),
@@ -41,11 +41,12 @@ function sheetBinding(value: string | null | undefined, fallback: Binding): Bind
 export function importPlayerScenario(player: PlayerTemplate, scenario: PlayerHotbar, base: HotbarPlan, usePlayerKeys: boolean): SavedScenario {
   const plan = blankScenario(base, `${player.name} · ${scenarioLabel(scenario.name)}`)
   plan.hotbarSlots = plan.hotbarSlots.map((slot, i) => ({
-    ...slot, items: scenario.slots[i].map(catalogItem),
+    ...slot, items: scenario.slots[i].map(catalogItem), flex: scenario.slots[i].length > 1,
     binding: usePlayerKeys ? sheetBinding(player.keys[i], slot.binding) : slot.binding,
   }))
   plan.offhand = usePlayerKeys ? sheetBinding(player.offhandKey, base.offhand) : plan.offhand
   plan.offhandItems = scenario.offhand.map(catalogItem)
+  plan.flexSpotsEnabled = plan.hotbarSlots.some((slot) => slot.flex)
   return { id: crypto.randomUUID(), group: 'player', playerId: player.id, plan }
 }
 

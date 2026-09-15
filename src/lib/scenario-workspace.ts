@@ -4,7 +4,8 @@ import type { HotbarPlan, SavedLayout, SavedScenario, Workspace } from '../types
 export function layoutFromScenario(scenario: SavedScenario): SavedLayout {
   return { id: scenario.id, group: scenario.group, playerId: scenario.playerId,
     name: scenario.plan.name, isExample: scenario.plan.isExample,
-    flexSpotsEnabled: scenario.plan.flexSpotsEnabled ?? false, offhandItems: scenario.plan.offhandItems,
+    flexSpotsEnabled: scenario.plan.flexSpotsEnabled,
+    offhandItems: scenario.plan.offhandItems,
     slots: scenario.plan.hotbarSlots.map(({ slot, flex, items }) => ({ slot, flex, items })),
   }
 }
@@ -19,7 +20,6 @@ export function ensureScenarioTemplates(workspace: Workspace): Workspace {
   return { ...workspace, scenarioTemplatesVersion: 1,
     layouts: [...workspace.layouts.map((layout): SavedLayout => ({ ...layout,
       group: layout.id === main.id ? 'main' : 'custom',
-      flexSpotsEnabled: layout.flexSpotsEnabled ?? (layout.id === main.id || layout.slots.some((slot) => slot.items.length > 1)),
     })), ...templates.filter((template) => !workspace.layouts.some((layout) => layout.id === template.id))],
   }
 }
@@ -30,4 +30,14 @@ export function importWorkspaceScenarios(workspace: Workspace, scenarios: SavedS
   return { ...workspace, layouts: [...workspace.layouts, ...scenarios.map(layoutFromScenario)],
     bindings: useKeys ? { ...workspace.bindings, hotbar: plan.hotbarSlots.map((slot) => slot.binding), offhand: plan.offhand } : workspace.bindings,
   }
+}
+
+export function importScenarioContents(workspace: Workspace, sourceId: string): Workspace {
+  const source = workspace.layouts.find((layout) => layout.id === sourceId)
+  if (!source || source.id === workspace.activeLayoutId) return workspace
+  return { ...workspace, layouts: workspace.layouts.map((layout) => layout.id === workspace.activeLayoutId
+    ? { ...layout, isExample: false,
+      flexSpotsEnabled: source.slots.some((slot) => slot.flex || slot.items.length > 1) || (source.flexSpotsEnabled ?? source.group === 'main'),
+      slots: structuredClone(source.slots), offhandItems: structuredClone(source.offhandItems ?? []) }
+    : layout) }
 }

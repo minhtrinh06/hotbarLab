@@ -3,6 +3,7 @@ import { ITEM_CATALOG } from './data/catalog'
 import { Scenarios } from './components/Scenarios'
 import { PlayerTemplates } from './Scenarios'
 import { importPlayerScenario, setFlexSpots, type PlayerHotbar, type PlayerTemplate } from './data/scenarios'
+import { copySlot, pasteSlot } from './lib/slot-clipboard'
 import { importWorkspaceScenarios } from './lib/scenario-workspace'
 import { MinecraftExports } from './components/MinecraftExports'
 import { MINECRAFT_ITEMS } from './lib/inventory'
@@ -138,10 +139,8 @@ function SlotEditor({ plan, selected, onPlan }: { plan: HotbarPlan; selected: nu
     onPlan({ ...plan, isExample: false, hotbarSlots: plan.hotbarSlots.map((entry) => entry.slot === slot.slot ? update(entry) : entry) })
   }
 
-  const flexEnabled = plan.flexSpotsEnabled ?? true
   const addItem = (item: ItemRef) => updateSlot((current) => ({ ...current,
-    items: flexEnabled ? [...current.items, { ...item }] : [{ ...item }],
-    flex: flexEnabled && (current.flex || current.items.length > 0),
+    items: plan.flexSpotsEnabled !== false && current.flex ? [...current.items, { ...item }] : [{ ...item }],
   }))
   const moveItem = (index: number, direction: -1 | 1) => updateSlot((current) => {
     const items = [...current.items]
@@ -171,9 +170,9 @@ function SlotEditor({ plan, selected, onPlan }: { plan: HotbarPlan; selected: nu
     <aside className="editor-panel">
       <div className="panel-heading slot-editor-heading">
         <div><span className="eyebrow">HOTBAR SLOT</span><h2>Slot {slot.slot}</h2></div>
-        <label className="switch-label"><input type="checkbox" aria-label="Flex slot" disabled={!flexEnabled} checked={slot.flex} onChange={(event) => updateSlot((current) => ({ ...current, flex: event.target.checked }))} /><span>Flex</span></label>
+        <label className="switch-label"><input type="checkbox" aria-label="Flex slot" disabled={plan.flexSpotsEnabled === false} checked={slot.flex} onChange={(event) => updateSlot((current) => ({ ...current, flex: event.target.checked, items: event.target.checked ? current.items : current.items.slice(0, 1) }))} /><span>Flex</span></label>
       </div>
-      <div className="flex-setting"><label className="switch-label"><input type="checkbox" aria-label="Flex Spots" checked={flexEnabled} onChange={(event) => onPlan(setFlexSpots(plan, event.target.checked))} /><span>Flex Spots</span><small>{flexEnabled ? 'Enabled' : 'Disabled'}</small></label><p>{flexEnabled ? 'Allow item pools. Turning off keeps the first item in each slot.' : 'One item per slot. Adding an item replaces the current one.'}</p></div>
+      <p className="field-help">{plan.flexSpotsEnabled === false ? 'Enable flex spots for this scenario to use item pools.' : slot.flex ? 'Add items to this flex pool. Turning Flex off keeps the first item.' : 'One item per slot. Enable Flex to keep multiple items.'}</p>
       <label className="field-label">Assigned key</label>
       <KeyCapture binding={slot.binding} onChange={(binding) => updateSlot((current) => ({ ...current, binding }))} />
 
@@ -266,14 +265,35 @@ function OtherBindings({ plan, onPlan }: { plan: HotbarPlan; onPlan: (plan: Hotb
 
 function PlanView({ plan, onPlan, onImport }: { plan: HotbarPlan; onPlan: (plan: HotbarPlan) => void; onImport: (player: PlayerTemplate, scenarios: PlayerHotbar[], useKeys: boolean) => void }) {
   const [selected, setSelected] = useState<number | 'offhand'>(5)
+  const [clipboardMessage, setClipboardMessage] = useState('')
+  const nativeClipboard = (target: EventTarget) => target instanceof HTMLElement
+    && (!!target.closest('input, textarea, select, [contenteditable], .key-capture') || !!window.getSelection()?.toString())
   return (
     <main className="view-shell">
       <ConflictNotice plan={plan} context="plan" />
-      <div className="planner-grid">
+      <div className="planner-grid" onCopy={(event) => {
+        if (nativeClipboard(event.target)) return
+        event.clipboardData.setData('text/plain', copySlot(plan, selected))
+        event.preventDefault()
+        setClipboardMessage(`Copied ${selected === 'offhand' ? 'offhand' : `slot ${selected}`}. Select a destination slot and paste.`)
+      }} onPaste={(event) => {
+        if (nativeClipboard(event.target)) return
+        const next = pasteSlot(plan, selected, event.clipboardData.getData('text/plain'))
+        if (!next) { setClipboardMessage('Copy a Hotbar Lab slot first.'); return }
+        event.preventDefault()
+        onPlan(next)
+        setClipboardMessage(`Pasted into ${selected === 'offhand' ? 'offhand' : `slot ${selected}`}.${selected !== 'offhand' && plan.flexSpotsEnabled === false ? ' Flex spots are disabled; only the first item is used.' : ''}`)
+      }}>
         <section className="hotbar-stage">
           <div className="stage-copy"><span className="eyebrow">CURRENT SCENARIO</span><h1>Build your muscle memory.</h1><p>Choose a slot to edit its key and item pool.</p></div>
+          <div className="scenario-flex-setting">
+            <label className="switch-label"><input type="checkbox" checked={plan.flexSpotsEnabled !== false} onChange={(event) => onPlan(setFlexSpots(plan, event.target.checked))} /><span>Enable flex spots for this scenario</span></label>
+            <p className="field-help">{plan.flexSpotsEnabled !== false ? 'Use each slot’s Flex toggle to choose its item pool. Turning this off keeps only the first item in every slot.' : 'Each slot holds one item. Enable this to allow individual flex slots.'}</p>
+          </div>
           <Hotbar plan={plan} selected={selected} onSelect={setSelected} />
           <div className="hotbar-legend"><span><i className="legend-key" /> Key</span><span><i className="legend-flex" /> Flex pool</span><span>Click any slot to edit</span></div>
+          <p className="clipboard-help">Select a slot, then <kbd>Ctrl+C</kbd> to copy and <kbd>Ctrl+V</kbd> to paste its items and Flex setting. ⌘ works too. The destination key stays the same.</p>
+          <p className="clipboard-status" role="status">{clipboardMessage}</p>
         </section>
         <SlotEditor plan={plan} selected={selected} onPlan={onPlan} />
       </div>

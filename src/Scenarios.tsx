@@ -11,33 +11,43 @@ const GROUPS = [
   { id: 'custom', label: 'Custom', description: 'Your own scenarios' },
 ]
 
-export function ScenarioPicker({ library, onSelect, onNew, onDuplicate, onDefault, onDelete }: {
+export function ScenarioPicker({ library, onSelect, onImport, onNew, onDuplicate, onDefault, onDelete }: {
   library: ScenarioLibrary; onSelect: (id: string) => void; onNew: () => void;
+  onImport: (id: string) => void;
   onDuplicate: () => void; onDefault: () => void; onDelete: () => void;
 }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<'choose' | 'import' | null>(null)
+  const [message, setMessage] = useState('')
   const [query, setQuery] = useState('')
-  const root = useRef<HTMLDivElement>(null)
+  const root = useRef<HTMLElement>(null)
   const trigger = useRef<HTMLButtonElement>(null)
+  const importTrigger = useRef<HTMLButtonElement>(null)
   const search = useRef<HTMLInputElement>(null)
   const current = library.scenarios.find((scenario) => scenario.id === library.activeId)!
-  const close = () => { setOpen(false); trigger.current?.focus() }
+  const close = () => { setOpen(null); (open === 'import' ? importTrigger : trigger).current?.focus() }
   useEffect(() => {
     if (!open) return
     search.current?.focus()
-    const dismiss = (event: PointerEvent) => { if (!root.current?.contains(event.target as Node)) setOpen(false) }
+    const dismiss = (event: PointerEvent) => { if (!root.current?.contains(event.target as Node)) setOpen(null) }
     window.addEventListener('pointerdown', dismiss)
     return () => window.removeEventListener('pointerdown', dismiss)
   }, [open])
-  const matches = library.scenarios.filter((scenario) => `${scenario.plan.name} ${scenario.group}`.toLowerCase().includes(query.toLowerCase()))
-  const choose = (scenario: SavedScenario) => { onSelect(scenario.id); close() }
-  return <section className="scenario-toolbar workspace-scenarios" aria-label="Scenarios">
-    <div className="scenario-picker" ref={root} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setOpen(false) }}>
+  const matches = library.scenarios.filter((scenario) => (open !== 'import' || scenario.id !== current.id)
+    && `${scenario.plan.name} ${scenario.group}`.toLowerCase().includes(query.toLowerCase()))
+  const choose = (scenario: SavedScenario) => {
+    if (open === 'import') {
+      onImport(scenario.id)
+      setMessage(`Imported items and Flex settings from ${scenario.plan.name} into ${current.plan.name}.`)
+    } else { onSelect(scenario.id); setMessage('') }
+    close()
+  }
+  return <section className="scenario-toolbar workspace-scenarios" aria-label="Scenarios" ref={root} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setOpen(null) }}>
+    <div className="scenario-picker">
       <span className="field-label">Scenarios</span>
-      <button ref={trigger} className={`scenario-trigger ${open ? 'is-open' : ''}`} type="button" aria-expanded={open} aria-controls="scenario-popover" aria-haspopup="dialog" onClick={() => { setOpen(!open); setQuery('') }}>
+      <button ref={trigger} className={`scenario-trigger ${open === 'choose' ? 'is-open' : ''}`} type="button" aria-expanded={open === 'choose'} aria-controls="scenario-popover" aria-haspopup="dialog" onClick={() => { setOpen(open === 'choose' ? null : 'choose'); setQuery('') }}>
         <span><small>{current.group === 'main' ? 'MAIN HOTBAR' : current.group.toUpperCase()}</small><strong>{current.plan.name}</strong></span><span aria-hidden="true">⌄</span>
       </button>
-      {open && <div id="scenario-popover" className="scenario-popover" role="dialog" aria-label="Choose scenario" onKeyDown={(event) => {
+      {open && <div id="scenario-popover" className="scenario-popover" role="dialog" aria-label={open === 'import' ? 'Import from another scenario' : 'Choose scenario'} onKeyDown={(event) => {
         if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close() }
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
           event.preventDefault()
@@ -46,6 +56,7 @@ export function ScenarioPicker({ library, onSelect, onNew, onDuplicate, onDefaul
           options[(index + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length]?.focus()
         }
       }}>
+        {open === 'import' && <p className="scenario-import-help">Choose a source to replace all hotbar and offhand items in <strong>{current.plan.name}</strong>, including empty slots. Your scenario name and keybinds stay the same.</p>}
         <div className="scenario-search"><span aria-hidden="true">⌕</span><input ref={search} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find a scenario…" aria-label="Find a scenario" /></div>
         <div className="scenario-options">
           {GROUPS.map((group) => {
@@ -62,8 +73,9 @@ export function ScenarioPicker({ library, onSelect, onNew, onDuplicate, onDefaul
         <div className="scenario-popover-footer">Changes save automatically on this device.</div>
       </div>}
     </div>
-    <div className="scenario-actions"><button className="secondary-button" onClick={onNew}>+ New scenario</button><button className="secondary-button" onClick={onDuplicate}>Duplicate</button><button className="text-button" disabled={current.id === library.defaultId} onClick={onDefault}>{current.id === library.defaultId ? 'Default scenario' : 'Make default'}</button><button className="text-button danger-text" disabled={current.group === 'main'} onClick={onDelete}>Delete scenario</button></div>
+    <div className="scenario-actions"><button className="secondary-button" onClick={onNew}>+ New scenario</button><button className="secondary-button" onClick={onDuplicate}>Duplicate</button><button ref={importTrigger} type="button" className="secondary-button" aria-expanded={open === 'import'} aria-controls="scenario-popover" aria-haspopup="dialog" disabled={library.scenarios.length < 2} onClick={() => { setOpen(open === 'import' ? null : 'import'); setQuery('') }}>Import from another scenario</button><button className="text-button" disabled={current.id === library.defaultId} onClick={onDefault}>{current.id === library.defaultId ? 'Default scenario' : 'Make default'}</button><button className="text-button danger-text" disabled={current.group === 'main'} onClick={onDelete}>Delete scenario</button></div>
     <p className="scenario-help">Rename above. Scenarios share keybinds. Unassigned practice presets use your default scenario.</p>
+    {message && <p className="scenario-help" role="status">{message}</p>}
   </section>
 }
 

@@ -37,6 +37,7 @@ export function createWorkspace(plan = createStarterPlan()): Workspace {
   return ensureScenarioTemplates({
     version: 2, activeLayoutId: 'default', defaultLayoutId: 'default',
     layouts: [{ id: 'default', name: plan.name, isExample: plan.isExample,
+      flexSpotsEnabled: plan.flexSpotsEnabled,
       slots: plan.hotbarSlots.map(({ slot, flex, items }) => ({ slot, flex, items })) }],
     bindings: { hotbar: plan.hotbarSlots.map((slot) => slot.binding), offhand: plan.offhand, other: plan.otherBindings },
     destinations: {},
@@ -46,7 +47,10 @@ export function createWorkspace(plan = createStarterPlan()): Workspace {
 export function activePlan(workspace: Workspace, id = workspace.activeLayoutId): HotbarPlan {
   const layout = workspace.layouts.find((entry) => entry.id === id)!
   return { version: 1, name: layout.name, isExample: layout.isExample,
-    flexSpotsEnabled: layout.flexSpotsEnabled ?? true, ...(layout.offhandItems?.length ? { offhandItems: layout.offhandItems } : {}),
+    // Preserve pools saved while the scenario-wide control was absent, including stale false flags.
+    flexSpotsEnabled: layout.slots.some((slot) => slot.flex || slot.items.length > 1)
+      || (layout.flexSpotsEnabled ?? layout.group === 'main'),
+    ...(layout.offhandItems?.length ? { offhandItems: layout.offhandItems } : {}),
     hotbarSlots: layout.slots.map((slot, index) => ({ ...slot, binding: workspace.bindings.hotbar[index] })),
     offhand: workspace.bindings.offhand, otherBindings: workspace.bindings.other }
 }
@@ -55,7 +59,8 @@ export function updateActivePlan(workspace: Workspace, plan: HotbarPlan): Worksp
   return { ...workspace,
     layouts: workspace.layouts.map((layout) => layout.id !== workspace.activeLayoutId ? layout : {
       ...layout, name: plan.name, isExample: plan.isExample,
-      flexSpotsEnabled: plan.flexSpotsEnabled, offhandItems: plan.offhandItems,
+      flexSpotsEnabled: plan.flexSpotsEnabled,
+      offhandItems: plan.offhandItems,
       slots: plan.hotbarSlots.map(({ slot, flex, items }) => ({ slot, flex, items })),
     }),
     bindings: { hotbar: plan.hotbarSlots.map((slot) => slot.binding), offhand: plan.offhand, other: plan.otherBindings },

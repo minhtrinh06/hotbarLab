@@ -19,9 +19,9 @@ export interface ItemRef {
 }
 
 export interface SavedLayout {
+  flexSpotsEnabled?: boolean
   group?: ScenarioGroup
   playerId?: string
-  flexSpotsEnabled?: boolean
   offhandItems?: ItemRef[]
   id: string
   name: string

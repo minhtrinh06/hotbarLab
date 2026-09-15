@@ -29,9 +29,9 @@ const other = (
 export function createStarterPlan(): HotbarPlan {
   return {
     version: 1,
+    flexSpotsEnabled: true,
     name: 'Example MCSR setup',
     isExample: true,
-    flexSpotsEnabled: true,
     hotbarSlots: [
       slot(1, key('1', 'key.keyboard.1'), ['iron-pickaxe']),
       slot(2, key('2', 'key.keyboard.2'), ['iron-axe']),

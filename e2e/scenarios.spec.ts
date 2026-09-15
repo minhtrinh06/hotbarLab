@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 test('scenario picker, flex rules, saved defaults and player imports', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('checkbox', { name: 'Flex Spots', exact: true })).toBeChecked()
+  await expect(page.getByRole('checkbox', { name: 'Enable flex spots for this scenario', exact: true })).toBeChecked()
   await page.locator('.scenario-trigger').click()
   const picker = page.getByRole('dialog', { name: 'Choose scenario' })
   await expect(picker.getByRole('region', { name: 'Basics', exact: true }).getByRole('button')).toHaveCount(12)
@@ -12,8 +12,8 @@ test('scenario picker, flex rules, saved defaults and player imports', async ({ 
   await page.keyboard.press('Enter')
   await expect(picker).not.toBeVisible()
   await expect(page.getByRole('textbox', { name: 'Scenario name' })).toHaveValue('Ocean overworld')
-  await expect(page.getByRole('checkbox', { name: 'Flex Spots', exact: true })).not.toBeChecked()
   await expect(page.getByRole('checkbox', { name: 'Flex slot', exact: true })).toBeDisabled()
+  await expect(page.getByRole('checkbox', { name: 'Flex slot', exact: true })).not.toBeChecked()
   await page.getByLabel('Add from catalogue').fill('Respawn Anchor')
   await page.getByTitle('Add Respawn Anchor').click()
   await page.getByLabel('Add from catalogue').fill('Glowstone')
@@ -36,7 +36,7 @@ test('scenario picker, flex rules, saved defaults and player imports', async ({ 
   await expect(picker.getByRole('button')).toHaveCount(12)
   await picker.getByRole('button', { name: 'doogile · Ocean overworld', exact: true }).click()
   await expect(page.getByRole('button', { name: /Edit slot 5:.*R/ })).toBeVisible()
-  await expect(page.getByRole('checkbox', { name: 'Flex Spots', exact: true })).not.toBeChecked()
+  await expect(page.getByRole('checkbox', { name: 'Flex slot', exact: true })).toBeDisabled()
   await page.getByRole('button', { name: 'Export', exact: true }).click()
   await expect(page.getByLabel('Editable preview')).toContainText('doogile · Ocean overworld')
   await page.getByRole('button', { name: 'Practice', exact: true }).click()
