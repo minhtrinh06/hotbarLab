@@ -1,0 +1,347 @@
+[
+  {
+    "id": "empty-bucket",
+    "name": "Bucket",
+    "sprite": "/assets/items/empty-bucket.png"
+  },
+  {
+    "id": "bow",
+    "name": "Bow",
+    "sprite": "/assets/items/bow.png"
+  },
+  {
+    "id": "leaves-planks",
+    "name": "Leaves / Planks",
+    "sprite": "/assets/items/leaves-planks.png"
+  },
+  {
+    "id": "fire-resistance",
+    "name": "Fire Res",
+    "sprite": "/assets/items/fire-resistance.png"
+  },
+  {
+    "id": "crafting-table",
+    "name": "Crafting Table",
+    "sprite": "/assets/items/crafting-table.png"
+  },
+  {
+    "id": "dirt",
+    "name": "Dirt",
+    "sprite": "/assets/items/dirt.png"
+  },
+  {
+    "id": "crossbow",
+    "name": "Crossbow",
+    "sprite": "/assets/items/crossbow.png"
+  },
+  {
+    "id": "flint-and-steel",
+    "name": "Flint and Steel",
+    "sprite": "/assets/items/flint-and-steel.png"
+  },
+  {
+    "id": "ender-pearl",
+    "name": "Pearls",
+    "sprite": "/assets/items/ender-pearl.png"
+  },
+  {
+    "id": "bricks",
+    "name": "Blocks",
+    "sprite": "/assets/items/bricks.png"
+  },
+  {
+    "id": "gold-ingot",
+    "name": "Gold",
+    "sprite": "/assets/items/gold-ingot.png"
+  },
+  {
+    "id": "iron-shovel",
+    "name": "Shovel",
+    "sprite": "/assets/items/iron-shovel.png"
+  },
+  {
+    "id": "iron-sword",
+    "name": "Sword",
+    "sprite": "/assets/items/iron-sword.png"
+  },
+  {
+    "id": "iron-pickaxe",
+    "name": "Pickaxe",
+    "sprite": "/assets/items/iron-pickaxe.png"
+  },
+  {
+    "id": "iron-axe",
+    "name": "Axe",
+    "sprite": "/assets/items/iron-axe.png"
+  },
+  {
+    "id": "oak-boat",
+    "name": "Boat",
+    "sprite": "/assets/items/oak-boat.png"
+  },
+  {
+    "id": "tnt",
+    "name": "TNT",
+    "sprite": "/assets/items/tnt.png"
+  },
+  {
+    "id": "oak-door",
+    "name": "Door",
+    "sprite": "/assets/items/oak-door.png"
+  },
+  {
+    "id": "cut-sandstone",
+    "name": "Cut Sandstone",
+    "sprite": "/assets/items/cut-sandstone.png"
+  },
+  {
+    "id": "fire-charge",
+    "name": "Fire Charge",
+    "sprite": "/assets/items/fire-charge.png"
+  },
+  {
+    "id": "shears",
+    "name": "Shears",
+    "sprite": "/assets/items/shears.png"
+  },
+  {
+    "id": "apple",
+    "name": "Food",
+    "sprite": "/assets/items/apple.png"
+  },
+  {
+    "id": "leaves",
+    "name": "Leaves",
+    "sprite": "/assets/items/leaves.png"
+  },
+  {
+    "id": "bread",
+    "name": "Bread",
+    "sprite": "/assets/items/bread.png"
+  },
+  {
+    "id": "stone-pressure-plate",
+    "name": "Stone Pressure Plate",
+    "sprite": "/assets/items/stone-pressure-plate.png"
+  },
+  {
+    "id": "rotten-flesh",
+    "name": "Rotten Flesh",
+    "sprite": "/assets/items/rotten-flesh.png"
+  },
+  {
+    "id": "salmon-cod",
+    "name": "Salmon / Cod",
+    "sprite": "/assets/items/salmon-cod.png"
+  },
+  {
+    "id": "gold-pickaxe",
+    "name": "Gold Pickaxe",
+    "sprite": "/assets/items/gold-pickaxe.png"
+  },
+  {
+    "id": "blaze-rod",
+    "name": "Blaze Rod",
+    "sprite": "/assets/items/blaze-rod.png"
+  },
+  {
+    "id": "animal-meat",
+    "name": "Animal Meat",
+    "sprite": "/assets/items/animal-meat.png"
+  },
+  {
+    "id": "bucket-food",
+    "name": "Bucket / Food",
+    "sprite": "/assets/items/bucket-food.png"
+  },
+  {
+    "id": "bed-food",
+    "name": "Bed / Food",
+    "sprite": "/assets/items/bed-food.png"
+  },
+  {
+    "id": "carrot",
+    "name": "Carrot",
+    "sprite": "/assets/items/carrot.png"
+  },
+  {
+    "id": "ender-eye",
+    "name": "Eyes",
+    "sprite": "/assets/items/ender-eye.png"
+  },
+  {
+    "id": "gilded-blackstone",
+    "name": "Gilded Blackstone",
+    "sprite": "/assets/items/gilded-blackstone.png"
+  },
+  {
+    "id": "sword-gold-pickaxe",
+    "name": "Sword / Gold Pickaxe",
+    "sprite": "/assets/items/sword-gold-pickaxe.png"
+  },
+  {
+    "id": "gold-block",
+    "name": "Gold Block",
+    "sprite": "/assets/items/gold-block.png"
+  },
+  {
+    "id": "red-bed",
+    "name": "Bed",
+    "sprite": "/assets/items/red-bed.png"
+  },
+  {
+    "id": "golden-apple",
+    "name": "Golden Apple",
+    "sprite": "/assets/items/golden-apple.png"
+  },
+  {
+    "id": "pickaxes",
+    "name": "Pickaxe / Gold Pickaxe",
+    "sprite": "/assets/items/pickaxes.png"
+  },
+  {
+    "id": "axe-gold-pickaxe",
+    "name": "Axe / Gold Pickaxe",
+    "sprite": "/assets/items/axe-gold-pickaxe.png"
+  },
+  {
+    "id": "gravel",
+    "name": "Gravel",
+    "sprite": "/assets/items/gravel.png"
+  },
+  {
+    "id": "soul-sand",
+    "name": "Soul Sand",
+    "sprite": "/assets/items/soul-sand.png"
+  },
+  {
+    "id": "golden-carrot",
+    "name": "Golden Carrot",
+    "sprite": "/assets/items/golden-carrot.png"
+  },
+  {
+    "id": "enchanted-golden-apple",
+    "name": "Enchanted Golden Apple",
+    "sprite": "/assets/items/enchanted-golden-apple.png"
+  },
+  {
+    "id": "diamond-sword",
+    "name": "Diamond Sword",
+    "sprite": "/assets/items/diamond-sword.png"
+  },
+  {
+    "id": "axe-diamond-sword",
+    "name": "Axe / Diamond Sword",
+    "sprite": "/assets/items/axe-diamond-sword.png"
+  },
+  {
+    "id": "nether-brick",
+    "name": "Nether Bricks",
+    "sprite": "/assets/items/nether-brick.png"
+  },
+  {
+    "id": "bed-tnt",
+    "name": "Bed / TNT",
+    "sprite": "/assets/items/bed-tnt.png"
+  },
+  {
+    "id": "fishing-rod",
+    "name": "Fishing Rod",
+    "sprite": "/assets/items/fishing-rod.png"
+  },
+  {
+    "id": "steak",
+    "name": "Steak",
+    "sprite": "/assets/items/steak.png"
+  },
+  {
+    "id": "cooked-mutton",
+    "name": "Cooked Mutton",
+    "sprite": "/assets/items/cooked-mutton.png"
+  },
+  {
+    "id": "cooked-cod",
+    "name": "Cooked Cod",
+    "sprite": "/assets/items/cooked-cod.png"
+  },
+  {
+    "id": "shovel-gold-pickaxe",
+    "name": "Shovel / Gold Pickaxe",
+    "sprite": "/assets/items/shovel-gold-pickaxe.png"
+  },
+  {
+    "id": "obsidian",
+    "name": "Obsidian",
+    "sprite": "/assets/items/obsidian.png"
+  },
+  {
+    "id": "glowstone",
+    "name": "Glowstone",
+    "sprite": "/assets/items/glowstone.png"
+  },
+  {
+    "id": "respawn-anchor",
+    "name": "Respawn Anchor",
+    "sprite": "/assets/items/respawn-anchor.png"
+  },
+  {
+    "id": "leaves-dirt",
+    "name": "Leaves / Dirt",
+    "sprite": "/assets/items/leaves-dirt.png"
+  },
+  {
+    "id": "crying-obsidian-pair",
+    "name": "Crying Obsidian / Obsidian",
+    "sprite": "/assets/items/crying-obsidian-pair.png"
+  },
+  {
+    "id": "cooked-chicken",
+    "name": "Cooked Chicken",
+    "sprite": "/assets/items/cooked-chicken.png"
+  },
+  {
+    "id": "non-generic-apple",
+    "name": "Apple",
+    "sprite": "/assets/items/non-generic-apple.png"
+  },
+  {
+    "id": "cooked-salmon",
+    "name": "Cooked Salmon",
+    "sprite": "/assets/items/cooked-salmon.png"
+  },
+  {
+    "id": "oak-planks",
+    "name": "Planks",
+    "sprite": "/assets/items/oak-planks.png"
+  },
+  {
+    "id": "crying-obsidian",
+    "name": "Crying Obsidian",
+    "sprite": "/assets/items/crying-obsidian.png"
+  },
+  {
+    "id": "cooked-porkchop",
+    "name": "Cooked Porkchop",
+    "sprite": "/assets/items/cooked-porkchop.png"
+  },
+  {
+    "id": "obsidian-anchor",
+    "name": "Crying Obsidian / Obsidian / Anchor",
+    "sprite": "/assets/items/obsidian-anchor.png"
+  },
+  {
+    "id": "dirt-netherrack",
+    "name": "Dirt / Netherrack",
+    "sprite": "/assets/items/dirt-netherrack.png"
+  },
+  {
+    "id": "crying-glowstone",
+    "name": "Crying Obsidian / Glowstone",
+    "sprite": "/assets/items/crying-glowstone.png"
+  },
+  {
+    "id": "blackstone-bricks",
+    "name": "Blackstone Bricks",
+    "sprite": "/assets/items/blackstone-bricks.png"
+  }
+]

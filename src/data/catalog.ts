@@ -1,8 +1,9 @@
 import type { ItemRef } from '../types'
+import sheetItems from './sheet-items.json'
 
 const sprite = (id: string) => `/assets/items/${id}.png`
 
-export const ITEM_CATALOG: ItemRef[] = [
+const ORIGINAL_ITEMS: ItemRef[] = [
   { id: 'iron-pickaxe', name: 'Pickaxe', sprite: sprite('iron-pickaxe') },
   { id: 'iron-axe', name: 'Axe', sprite: sprite('iron-axe') },
   { id: 'dirt', name: 'Blocks', sprite: sprite('dirt') },
@@ -22,6 +23,12 @@ export const ITEM_CATALOG: ItemRef[] = [
   { id: 'water-bucket', name: 'Bucket', sprite: sprite('water-bucket') },
   { id: 'cooked-salmon', name: 'Food', sprite: sprite('cooked-salmon') },
   { id: 'gravel', name: 'Gravel', sprite: sprite('gravel') },
+]
+
+// Prefer the sheet's inventory renders; retain items absent from its catalogue.
+export const ITEM_CATALOG: ItemRef[] = [
+  ...ORIGINAL_ITEMS.map((item) => ({ ...item, sprite: sheetItems.find((entry) => entry.id === item.id)?.sprite ?? item.sprite })),
+  ...sheetItems.filter((item) => !ORIGINAL_ITEMS.some((entry) => entry.id === item.id)),
 ]
 
 export function catalogItem(id: string): ItemRef {

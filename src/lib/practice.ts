@@ -1,5 +1,32 @@
-import type { HotbarPlan, PracticePrompt, PracticeResult } from '../types'
+import type { HotbarPlan, OtherBinding, PracticeGroup, PracticePrompt, PracticeResult } from '../types'
 import { ITEM_CATALOG } from '../data/catalog'
+
+export const PRACTICE_GROUPS: { id: PracticeGroup; label: string; description: string }[] = [
+  { id: 'hotbar', label: 'Hotbar slots 1–9', description: 'All assigned items, including flex slots' },
+  { id: 'minecraft', label: 'Minecraft hotkeys', description: 'Offhand, pick block & sprint' },
+  { id: 'macros', label: 'Macros', description: 'Thin, wide & eye measure' },
+  { id: 'ninjabrain', label: 'Ninja Brain', description: 'Overlay, left, right & reset' },
+  { id: 'other', label: 'Custom hotkeys', description: 'Your additional actions' },
+]
+
+const ACTION_ICONS: Record<string, string> = {
+  sprint: 'leather-boots.png',
+  'pick-block': 'grass-block.png',
+  'wide-macro': 'wide-macro.png',
+  'thin-macro': 'thin-macro.png',
+  'eye-macro': 'thin-macro.png',
+  overlay: 'ninjabrain.jpg',
+  'eye-left': 'arrow-left.svg',
+  'eye-right': 'arrow-right.svg',
+  'reset-nbb': 'reset.svg',
+}
+
+function actionGroup(action: OtherBinding): PracticeGroup {
+  if (action.jsonProperty || ['sprint', 'pick-block'].includes(action.id)) return 'minecraft'
+  if (['wide-macro', 'thin-macro', 'eye-macro'].includes(action.id)) return 'macros'
+  if (['overlay', 'eye-left', 'eye-right', 'reset-nbb'].includes(action.id)) return 'ninjabrain'
+  return 'other'
+}
 
 export function buildPromptPool(plan: HotbarPlan): PracticePrompt[] {
   const prompts: PracticePrompt[] = []
@@ -7,6 +34,7 @@ export function buildPromptPool(plan: HotbarPlan): PracticePrompt[] {
     for (const item of slot.items) {
       prompts.push({
         id: `slot-${slot.slot}-${item.id}`,
+        group: 'hotbar',
         label: item.name,
         sourceLabel: `Slot ${slot.slot}`,
         sprite: item.sprite,
@@ -15,16 +43,20 @@ export function buildPromptPool(plan: HotbarPlan): PracticePrompt[] {
     }
   }
   if (plan.offhand.display) {
-    prompts.push({ id: 'offhand', label: 'Offhand', sourceLabel: 'Offhand', binding: plan.offhand })
+    prompts.push({ id: 'offhand', group: 'minecraft', label: 'Offhand', sourceLabel: 'Offhand', sprite: '/assets/practice/offhand.png', spriteStyle: 'shield', binding: plan.offhand })
   }
   for (const action of plan.otherBindings) {
     if (!action.enabledInPractice || !action.binding.display) continue
     const item = action.itemId ? ITEM_CATALOG.find((entry) => entry.id === action.itemId) : undefined
+    const group = actionGroup(action)
+    const icon = ACTION_ICONS[action.id] ?? (action.jsonProperty === 'key_key.sprint' ? ACTION_ICONS.sprint : action.jsonProperty === 'key_key.pickItem' ? ACTION_ICONS['pick-block'] : undefined)
     prompts.push({
       id: `other-${action.id}`,
+      group,
       label: action.label || 'Unnamed action',
       sourceLabel: action.label || 'Unnamed action',
-      sprite: action.promptType === 'item' ? item?.sprite : undefined,
+      sprite: action.promptType === 'item' ? item?.sprite : icon ? `/assets/practice/${icon}` : undefined,
+      spriteStyle: action.promptType !== 'item' && group === 'macros' ? 'screenshot' : undefined,
       binding: action.binding,
     })
   }

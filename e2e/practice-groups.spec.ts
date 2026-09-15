@@ -1,0 +1,60 @@
+import { expect, test } from '@playwright/test'
+
+test('practice defaults, group toggles, individual overrides and icons work together', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Practice', exact: true }).click()
+  const groups = page.getByRole('group', { name: 'Hotkey groups' })
+  const hotbar = groups.getByRole('checkbox', { name: 'Hotbar slots 1–9', exact: true })
+  const minecraft = groups.getByRole('checkbox', { name: 'Minecraft hotkeys', exact: true })
+  await expect(hotbar).toBeChecked()
+  await expect(minecraft).not.toBeChecked()
+  await expect(groups.getByRole('checkbox', { name: 'Macros', exact: true })).not.toBeChecked()
+  await expect(groups.getByRole('checkbox', { name: 'Ninja Brain', exact: true })).not.toBeChecked()
+  await expect(page.locator('.selected-count strong')).toHaveText('19')
+
+  await minecraft.check()
+  await expect(page.getByRole('checkbox', { name: 'Include Offhand', exact: true })).toBeChecked()
+  await expect(page.getByRole('checkbox', { name: 'Include Sprint Toggle', exact: true })).toBeChecked()
+  await expect(page.getByRole('checkbox', { name: 'Include Pick Block', exact: true })).toBeChecked()
+  await page.getByRole('checkbox', { name: 'Include Offhand', exact: true }).uncheck()
+  await expect(minecraft).toBeChecked({ indeterminate: true })
+  await minecraft.click()
+  await expect(minecraft).toBeChecked()
+  await minecraft.uncheck()
+  await expect(page.locator('.selected-count strong')).toHaveText('19')
+
+  await page.getByRole('button', { name: 'Select all', exact: true }).click()
+  await expect(page.locator('.prompt-card input:checked')).toHaveCount(29)
+  await page.getByRole('button', { name: 'Clear', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Start session →' })).toBeDisabled()
+  await expect(page.locator('.prompt-card input:checked')).toHaveCount(0)
+  await groups.getByRole('checkbox', { name: 'Ninja Brain', exact: true }).check()
+  await expect(page.locator('.prompt-card input:checked')).toHaveCount(4)
+  await page.getByRole('button', { name: 'Clear', exact: true }).click()
+  await groups.getByRole('checkbox', { name: 'Macros', exact: true }).check()
+  await expect(page.locator('.prompt-card input:checked')).toHaveCount(3)
+
+  expect(await page.locator('.prompt-card img').evaluateAll((images) => images.every((image) => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0))).toBe(true)
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click()
+  await hotbar.check()
+  for (const width of [1440, 768, 390, 320]) {
+    await page.setViewportSize({ width, height: 960 })
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  }
+  await page.setViewportSize({ width: 1440, height: 1100 })
+  await page.evaluate(() => { (document.activeElement as HTMLElement)?.blur(); window.scrollTo(0, 0) })
+  await page.screenshot({ path: 'artifacts/practice-groups-desktop.png', fullPage: true })
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.screenshot({ path: 'artifacts/practice-groups-mobile.png', fullPage: true })
+
+  // A one-prompt pool must train only that action, including its new icon.
+  await page.getByRole('button', { name: 'Clear', exact: true }).click()
+  await page.getByRole('checkbox', { name: 'Include Eye Measure Right', exact: true }).check()
+  await page.getByRole('button', { name: 'Start session →' }).click()
+  await expect(page.locator('.practice-label')).toHaveText('Eye Measure Right')
+  await expect(page.locator('.practice-sprite')).toHaveAttribute('src', '/assets/practice/arrow-right.svg')
+  await page.keyboard.press(']')
+  await expect(page.locator('.practice-hint')).toContainText('correct')
+})

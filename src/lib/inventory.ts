@@ -31,12 +31,36 @@ const itemsById = new Map(registry.map((item) => [item.id, item]))
 export const itemName = (id: string) => itemsById.get(id)?.name ?? id
 export const stackLimit = (id: string) => itemsById.get(id)?.stackSize
 
+const SHEET_ALTERNATIVES: Record<string, string[]> = {
+  'leaves-planks': ['leaves', 'oak-planks'], 'salmon-cod': ['cooked-salmon', 'cooked-cod'],
+  'bucket-food': ['empty-bucket', 'apple'], 'bed-food': ['red-bed', 'apple'],
+  'sword-gold-pickaxe': ['iron-sword', 'gold-pickaxe'], pickaxes: ['iron-pickaxe', 'gold-pickaxe'],
+  'axe-gold-pickaxe': ['iron-axe', 'gold-pickaxe'], 'axe-diamond-sword': ['iron-axe', 'diamond-sword'],
+  'bed-tnt': ['red-bed', 'tnt'], 'shovel-gold-pickaxe': ['iron-shovel', 'gold-pickaxe'],
+  'leaves-dirt': ['leaves', 'dirt'], 'crying-obsidian-pair': ['crying-obsidian', 'obsidian'],
+  'obsidian-anchor': ['crying-obsidian', 'obsidian', 'respawn-anchor'],
+  'dirt-netherrack': ['dirt', 'netherrack'], 'crying-glowstone': ['crying-obsidian', 'glowstone'],
+  'animal-meat': ['cooked-beef', 'cooked-porkchop', 'cooked-mutton', 'cooked-chicken'],
+}
+
 function matches(preference: ItemRef, stack: Stack): boolean {
   if (stack.alternatives?.some((id) => matches(preference, { ...stack, id, alternatives: undefined }))) return true
   if (preference.minecraftId) return stack.id === preference.minecraftId
   if (preference.custom) return false
+  if (SHEET_ALTERNATIVES[preference.id]) return SHEET_ALTERNATIVES[preference.id].some((id) => matches({ ...preference, id }, stack))
   const id = stack.id.replace('minecraft:', '')
   switch (preference.id) {
+    case 'bricks': return matches({ ...preference, id: 'dirt' }, stack) || id === 'bricks'
+    case 'apple': return matches({ ...preference, id: 'cooked-salmon' }, stack) || ['apple', 'cooked_chicken', 'rotten_flesh', 'carrot', 'golden_apple'].includes(id)
+    case 'empty-bucket': return ['bucket', 'water_bucket', 'lava_bucket'].includes(id)
+    case 'leaves': return id.endsWith('_leaves')
+    case 'oak-planks': return id.endsWith('_planks')
+    case 'iron-sword': return id.endsWith('_sword')
+    case 'gold-pickaxe': return id === 'golden_pickaxe'
+    case 'nether-brick': return ['nether_bricks', 'nether_brick'].includes(id)
+    case 'steak': return id === 'cooked_beef'
+    case 'blackstone-bricks': return id === 'polished_blackstone_bricks'
+    case 'non-generic-apple': return id === 'apple'
     case 'iron-pickaxe': return id.endsWith('_pickaxe')
     case 'iron-axe': return id.endsWith('_axe')
     case 'iron-shovel': return id.endsWith('_shovel')

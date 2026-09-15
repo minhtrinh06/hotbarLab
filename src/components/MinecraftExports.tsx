@@ -55,7 +55,7 @@ function ExportPanel({ target, workspace, onChange }: {
   const settings = workspace.destinations[destination.id] ?? { overrides: {} }
   let slots: Array<Stack | null> = []
   let previewError = ''
-  try { slots = resolveHotbar(destination, workspace) } catch (error) { previewError = error instanceof Error ? error.message : 'Invalid layout.' }
+  try { slots = resolveHotbar(destination, workspace) } catch (error) { previewError = error instanceof Error ? error.message : 'Invalid scenario.' }
   const update = (next: DestinationSettings) => onChange({ ...workspace, destinations: { ...workspace.destinations, [destination.id]: next } })
   const download = () => {
     setError(''); setStatus('Starting export…')
@@ -88,11 +88,11 @@ function ExportPanel({ target, workspace, onChange }: {
         })}
       </select>
     </label>
-    <label className="field-label">Assigned layout<select aria-label={`${target} assigned layout`} value={settings.layoutId ?? ''} onChange={(event) => update({ ...settings, layoutId: event.target.value || undefined })}>
-      <option value="">Default layout</option>
+    <label className="field-label">Assigned scenario<select aria-label={`${target} assigned scenario`} value={settings.layoutId ?? ''} onChange={(event) => update({ ...settings, layoutId: event.target.value || undefined })}>
+      <option value="">Default scenario</option>
       {workspace.layouts.map((layout) => <option key={layout.id} value={layout.id}>{layout.name}</option>)}
     </select></label>
-    <p className="field-help">Rearrange supplied hotbar items using the layout’s priority order. Exact overrides apply to this destination. Other inventory slots and armor are retained.</p>
+    <p className="field-help">Rearrange supplied hotbar items using the scenario’s priority order. Exact overrides apply to this destination. Other inventory slots and armor are retained.</p>
     {!destination.items.length && <p className="field-help">This saved loadout starts empty. Use Customize to add exact items.</p>}
     {previewError && <p role="alert" className="inline-error">{previewError}</p>}
     <div className="export-slots" key={destinationId}>{slots.map((stack, slot) => <SlotOverride key={slot} slot={slot} stack={stack} override={settings.overrides[slot]} onChange={(override) => {

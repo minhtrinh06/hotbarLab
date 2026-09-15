@@ -16,7 +16,7 @@ test('edits a flex slot and reaches export', async ({ page }, testInfo) => {
   await expect(page.getByRole('button', { name: /Edit slot 1:.*V/ })).toBeVisible()
 
   await page.getByRole('button', { name: 'Practice' }).click()
-  await expect(page.getByRole('heading', { name: 'Test the layout before the run.' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Test the scenario before the run.' })).toBeVisible()
   await page.screenshot({ path: testInfo.outputPath('hotbar-lab-practice.png'), fullPage: true })
   await page.getByRole('button', { name: 'Clear' }).click()
   await page.getByText('Pickaxe', { exact: true }).click()

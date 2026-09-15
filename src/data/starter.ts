@@ -31,6 +31,7 @@ export function createStarterPlan(): HotbarPlan {
     version: 1,
     name: 'Example MCSR setup',
     isExample: true,
+    flexSpotsEnabled: true,
     hotbarSlots: [
       slot(1, key('1', 'key.keyboard.1'), ['iron-pickaxe']),
       slot(2, key('2', 'key.keyboard.2'), ['iron-axe']),

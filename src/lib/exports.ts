@@ -6,8 +6,8 @@ export function escapeMarkdown(value: string): string {
 }
 
 export function generateMarkdown(plan: HotbarPlan): string {
-  const lines = ['# Hot Bar', '']
-  if (plan.offhand.display) lines.push(`**( ${escapeMarkdown(plan.offhand.display)} )** Offhand`)
+  const lines = [`# ${escapeMarkdown(plan.name)}`, '', '## Hot Bar', '']
+  if (plan.offhand.display) lines.push(`**( ${escapeMarkdown(plan.offhand.display)} )** Offhand${plan.offhandItems?.length ? `: ${plan.offhandItems.map((item) => escapeMarkdown(item.name)).join(' | ')}` : ''}`)
 
   plan.hotbarSlots.forEach((slot) => {
     if (!slot.items.length && !slot.binding.display) return
@@ -19,7 +19,7 @@ export function generateMarkdown(plan: HotbarPlan): string {
 
   const other = plan.otherBindings.filter((entry) => entry.label || entry.binding.display)
   if (other.length) {
-    lines.push('', '# The Rest', '')
+    lines.push('', '## The Rest', '')
     other.forEach((entry) => {
       const key = entry.binding.display ? `**( ${escapeMarkdown(entry.binding.display)} )** ` : ''
       lines.push(`${key}${escapeMarkdown(entry.label || 'Unnamed action')}`)

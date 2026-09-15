@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ITEM_CATALOG } from './data/catalog'
-import { Layouts } from './components/Layouts'
+import { Scenarios } from './components/Scenarios'
+import { PlayerTemplates } from './Scenarios'
+import { importPlayerScenario, setFlexSpots, type PlayerHotbar, type PlayerTemplate } from './data/scenarios'
+import { importWorkspaceScenarios } from './lib/scenario-workspace'
 import { MinecraftExports } from './components/MinecraftExports'
 import { MINECRAFT_ITEMS } from './lib/inventory'
 import { bindingSignature, bindingsMatch, findConflicts, keyboardEventToBinding, mouseEventToBinding } from './lib/bindings'
 import { generateMarkdown, patchStandardSettings, safeFilename, type JsonPatchResult } from './lib/exports'
-import { buildPromptPool, makeSequence, practiceSummary } from './lib/practice'
+import { buildPromptPool, makeSequence, practiceSummary, PRACTICE_GROUPS } from './lib/practice'
 import { activePlan, createWorkspace, loadWorkspace, saveWorkspace, updateActivePlan, WORKSPACE_KEY } from './lib/storage'
 import type { Binding, HotbarPlan, HotbarSlot, ItemRef, OtherBinding, PracticePrompt, PracticeResult, Workspace } from './types'
 
@@ -88,11 +91,11 @@ function ConflictNotice({ plan, context }: { plan: HotbarPlan; context: 'plan' |
 
 function Hotbar({ plan, selected, onSelect }: { plan: HotbarPlan; selected: number | 'offhand'; onSelect: (slot: number | 'offhand') => void }) {
   return (
-    <div className="hotbar-scroll" aria-label="Minecraft hotbar planner">
+    <div className="hotbar-layout" aria-label="Minecraft hotbar planner">
       <div className="hotbar-wrap">
         <button className={`offhand-slot ${selected === 'offhand' ? 'is-selected' : ''}`} onClick={() => onSelect('offhand')} type="button">
           <span className="slot-number">F</span>
-          <span className="offhand-mark">↔</span>
+          {plan.offhandItems?.[0] ? <ItemImage item={plan.offhandItems[0]} /> : <span className="offhand-mark">↔</span>}
           <span className="slot-key">{plan.offhand.display || '—'}</span>
           <span className="slot-tooltip">Offhand · {plan.offhand.display || 'Unbound'}</span>
         </button>
@@ -135,7 +138,11 @@ function SlotEditor({ plan, selected, onPlan }: { plan: HotbarPlan; selected: nu
     onPlan({ ...plan, isExample: false, hotbarSlots: plan.hotbarSlots.map((entry) => entry.slot === slot.slot ? update(entry) : entry) })
   }
 
-  const addItem = (item: ItemRef) => updateSlot((current) => ({ ...current, items: [...current.items, { ...item }], flex: current.flex || current.items.length > 0 }))
+  const flexEnabled = plan.flexSpotsEnabled ?? true
+  const addItem = (item: ItemRef) => updateSlot((current) => ({ ...current,
+    items: flexEnabled ? [...current.items, { ...item }] : [{ ...item }],
+    flex: flexEnabled && (current.flex || current.items.length > 0),
+  }))
   const moveItem = (index: number, direction: -1 | 1) => updateSlot((current) => {
     const items = [...current.items]
     const target = index + direction
@@ -151,20 +158,22 @@ function SlotEditor({ plan, selected, onPlan }: { plan: HotbarPlan; selected: nu
         <p className="muted">Swap the held item with your offhand. This exports as <code>key_key.swapOffhand</code>.</p>
         <label className="field-label">Assigned key</label>
         <KeyCapture binding={plan.offhand} onChange={(binding) => onPlan({ ...plan, isExample: false, offhand: binding })} />
+        {!!plan.offhandItems?.length && <div className="offhand-items"><label className="field-label">Imported offhand item</label>{plan.offhandItems.map((item) => <span key={item.id}><ItemImage item={item} />{item.name}</span>)}<button className="text-button" onClick={() => onPlan({ ...plan, isExample: false, offhandItems: [] })}>Clear offhand item</button></div>}
         <p className="field-help">Escape cancels. Backspace clears. Mouse buttons are captured as separate display labels and Minecraft codes.</p>
       </aside>
     )
   }
 
   if (!slot) return null
-  const available = ITEM_CATALOG.filter((item) => !slot.items.some((assigned) => assigned.id === item.id) && item.name.toLowerCase().includes(search.toLowerCase()))
+  const available = ITEM_CATALOG.filter((item) => !slot.items.some((assigned) => assigned.id === item.id) && `${item.name} ${item.id.replaceAll('-', ' ')}`.toLowerCase().includes(search.toLowerCase()))
 
   return (
     <aside className="editor-panel">
       <div className="panel-heading slot-editor-heading">
         <div><span className="eyebrow">HOTBAR SLOT</span><h2>Slot {slot.slot}</h2></div>
-        <label className="switch-label"><input type="checkbox" checked={slot.flex} onChange={(event) => updateSlot((current) => ({ ...current, flex: event.target.checked }))} /><span>Flex</span></label>
+        <label className="switch-label"><input type="checkbox" aria-label="Flex slot" disabled={!flexEnabled} checked={slot.flex} onChange={(event) => updateSlot((current) => ({ ...current, flex: event.target.checked }))} /><span>Flex</span></label>
       </div>
+      <div className="flex-setting"><label className="switch-label"><input type="checkbox" aria-label="Flex Spots" checked={flexEnabled} onChange={(event) => onPlan(setFlexSpots(plan, event.target.checked))} /><span>Flex Spots</span><small>{flexEnabled ? 'Enabled' : 'Disabled'}</small></label><p>{flexEnabled ? 'Allow item pools. Turning off keeps the first item in each slot.' : 'One item per slot. Adding an item replaces the current one.'}</p></div>
       <label className="field-label">Assigned key</label>
       <KeyCapture binding={slot.binding} onChange={(binding) => updateSlot((current) => ({ ...current, binding }))} />
 
@@ -255,27 +264,28 @@ function OtherBindings({ plan, onPlan }: { plan: HotbarPlan; onPlan: (plan: Hotb
   )
 }
 
-function PlanView({ plan, onPlan }: { plan: HotbarPlan; onPlan: (plan: HotbarPlan) => void }) {
+function PlanView({ plan, onPlan, onImport }: { plan: HotbarPlan; onPlan: (plan: HotbarPlan) => void; onImport: (player: PlayerTemplate, scenarios: PlayerHotbar[], useKeys: boolean) => void }) {
   const [selected, setSelected] = useState<number | 'offhand'>(5)
   return (
     <main className="view-shell">
       <ConflictNotice plan={plan} context="plan" />
       <div className="planner-grid">
         <section className="hotbar-stage">
-          <div className="stage-copy"><span className="eyebrow">CURRENT LAYOUT</span><h1>Build your muscle memory.</h1><p>Choose a slot to edit its key and item pool.</p></div>
+          <div className="stage-copy"><span className="eyebrow">CURRENT SCENARIO</span><h1>Build your muscle memory.</h1><p>Choose a slot to edit its key and item pool.</p></div>
           <Hotbar plan={plan} selected={selected} onSelect={setSelected} />
           <div className="hotbar-legend"><span><i className="legend-key" /> Key</span><span><i className="legend-flex" /> Flex pool</span><span>Click any slot to edit</span></div>
         </section>
         <SlotEditor plan={plan} selected={selected} onPlan={onPlan} />
       </div>
       <OtherBindings plan={plan} onPlan={onPlan} />
+      <PlayerTemplates onImport={onImport} />
     </main>
   )
 }
 
 function PracticeView({ plan }: { plan: HotbarPlan }) {
   const pool = useMemo(() => buildPromptPool(plan), [plan])
-  const [included, setIncluded] = useState<Set<string>>(() => new Set(pool.map((prompt) => prompt.id)))
+  const [included, setIncluded] = useState<Set<string>>(() => new Set(pool.filter((prompt) => prompt.group === 'hotbar').map((prompt) => prompt.id)))
   const [sessionLength, setSessionLength] = useState(20)
   const [phase, setPhase] = useState<'setup' | 'countdown' | 'running' | 'feedback' | 'results'>('setup')
   const [countdown, setCountdown] = useState(3)
@@ -286,10 +296,12 @@ function PracticeView({ plan }: { plan: HotbarPlan }) {
   const startedAt = useRef(0)
 
   useEffect(() => {
-    setIncluded((current) => new Set(pool.filter((prompt) => current.has(prompt.id) || ![...current].some((id) => pool.some((candidate) => candidate.id === id))).map((prompt) => prompt.id)))
+    setIncluded((current) => new Set(pool.filter((prompt) => current.has(prompt.id)).map((prompt) => prompt.id)))
   }, [pool])
 
   const selectedPool = pool.filter((prompt) => included.has(prompt.id))
+  const groups = PRACTICE_GROUPS.map((group) => ({ ...group, prompts: pool.filter((prompt) => prompt.group === group.id) }))
+    .filter((group) => group.id !== 'other' || group.prompts.length > 0)
   const current = sequence[index]
 
   const start = () => {
@@ -358,7 +370,7 @@ function PracticeView({ plan }: { plan: HotbarPlan }) {
       <main className={`practice-arena centered-arena ${feedback ? (feedback.correct ? 'answer-correct' : 'answer-wrong') : ''}`}>
         <div className="practice-progress"><span>{index + 1} / {sequence.length}</span><i style={{ width: `${((index + 1) / sequence.length) * 100}%` }} /></div>
         <span className="eyebrow">{current.sourceLabel}</span>
-        {current.sprite ? <img className="practice-sprite" src={current.sprite} alt={current.label} /> : <div className="text-prompt">{current.label}</div>}
+        {current.sprite ? <img className={`practice-sprite sprite-${current.spriteStyle ?? 'item'}`} src={current.sprite} alt={current.label} /> : <div className="text-prompt">{current.label}</div>}
         {current.sprite && <h1 className="practice-label">{current.label}</h1>}
         <p className="practice-hint">{feedback ? (feedback.correct ? `${feedback.entered} · correct` : `${feedback.entered} · expected ${current.binding.display}`) : 'Press the assigned key'}</p>
       </main>
@@ -386,11 +398,31 @@ function PracticeView({ plan }: { plan: HotbarPlan }) {
   return (
     <main className="view-shell practice-setup">
       <ConflictNotice plan={plan} context="practice" />
-      <div className="practice-header"><div><span className="eyebrow">REACTION TRAINER</span><h1>Test the layout before the run.</h1><p>Every flex item maps back to its hotbar key.</p></div><button className="primary-button start-button" type="button" disabled={!selectedPool.length} onClick={start}>Start session <span>→</span></button></div>
+      <div className="practice-header"><div><span className="eyebrow">REACTION TRAINER</span><h1>Test the scenario before the run.</h1><p>Every flex item maps back to its hotbar key.</p></div><button className="primary-button start-button" type="button" disabled={!selectedPool.length} onClick={start}>Start session <span>→</span></button></div>
       <section className="session-settings"><div><span className="field-label">Session length</span><div className="segmented">{[10, 20, 50].map((length) => <button type="button" className={sessionLength === length ? 'is-active' : ''} key={length} onClick={() => setSessionLength(length)}>{length}</button>)}</div></div><div className="selected-count"><strong>{selectedPool.length}</strong><span>prompts active</span></div></section>
       <section className="prompt-picker">
         <div className="section-title-row"><div><span className="eyebrow">PROMPT POOL</span><h2>Choose what to drill</h2></div><div className="text-actions"><button type="button" onClick={() => setIncluded(new Set(pool.map((prompt) => prompt.id)))}>Select all</button><button type="button" onClick={() => setIncluded(new Set())}>Clear</button></div></div>
-        <div className="prompt-grid">{pool.map((prompt) => <label className={`prompt-card ${included.has(prompt.id) ? 'is-active' : ''}`} key={prompt.id}><input type="checkbox" checked={included.has(prompt.id)} onChange={() => setIncluded((currentSet) => { const next = new Set(currentSet); if (next.has(prompt.id)) next.delete(prompt.id); else next.add(prompt.id); return next })} />{prompt.sprite ? <img src={prompt.sprite} alt="" /> : <span className="text-glyph">Aa</span>}<span><strong>{prompt.label}</strong><small>{prompt.sourceLabel} · {prompt.binding.display || 'Unbound'}</small></span></label>)}</div>
+        <div className="practice-groups" role="group" aria-label="Hotkey groups">
+          {groups.map((group) => {
+            const active = group.prompts.filter((prompt) => included.has(prompt.id)).length
+            const all = group.prompts.length > 0 && active === group.prompts.length
+            const mixed = active > 0 && !all
+            return <label key={group.id} className={`practice-group ${active ? 'is-active' : ''} ${!group.prompts.length ? 'is-empty' : ''}`}>
+              <input type="checkbox" aria-label={group.label} checked={all} ref={(input) => { if (input) input.indeterminate = mixed }} disabled={!group.prompts.length} onChange={() => setIncluded((currentSet) => {
+                const next = new Set(currentSet)
+                group.prompts.forEach((prompt) => { if (all) next.delete(prompt.id); else next.add(prompt.id) })
+                return next
+              })} />
+              <span className="practice-group-copy"><strong>{group.label}</strong><small>{group.description}</small><span className="group-count">{!group.prompts.length ? 'No prompts available' : `${active} / ${group.prompts.length} prompts`}</span></span>
+              <span className="group-state" aria-hidden="true">{mixed ? 'Some' : all ? 'On' : 'Off'}</span>
+            </label>
+          })}
+        </div>
+        <div className="individual-heading"><h3>Individual hotkeys</h3><p>Fine-tune the prompts in each group.</p></div>
+        {groups.filter((group) => group.prompts.length > 0).map((group) => <fieldset className="individual-group" key={group.id}>
+          <legend>{group.label}</legend>
+          <div className="prompt-grid">{group.prompts.map((prompt) => <label className={`prompt-card ${included.has(prompt.id) ? 'is-active' : ''} ${prompt.spriteStyle === 'screenshot' ? 'macro-card' : ''}`} key={prompt.id}><input type="checkbox" aria-label={`Include ${prompt.label}`} checked={included.has(prompt.id)} onChange={() => setIncluded((currentSet) => { const next = new Set(currentSet); if (next.has(prompt.id)) next.delete(prompt.id); else next.add(prompt.id); return next })} />{prompt.sprite ? <img className={`sprite-${prompt.spriteStyle ?? 'item'}`} src={prompt.sprite} alt="" /> : <span className="text-glyph">Aa</span>}<span><strong>{prompt.label}</strong><small>{prompt.sourceLabel} · {prompt.binding.display || 'Unbound'}</small></span></label>)}</div>
+        </fieldset>)}
       </section>
     </main>
   )
@@ -432,7 +464,7 @@ function ExportView({ plan, workspace, onWorkspace }: { plan: HotbarPlan; worksp
   return (
     <main className="view-shell export-view">
       <ConflictNotice plan={plan} context="export" />
-      <div className="export-heading"><span className="eyebrow">TAKE IT WITH YOU</span><h1>Export without the cleanup.</h1><p>Exports are generated locally. Practice templates download on demand; your layouts stay in this browser.</p></div>
+      <div className="export-heading"><span className="eyebrow">TAKE IT WITH YOU</span><h1>Export without the cleanup.</h1><p>Exports are generated locally. Practice templates download on demand; your scenarios stay in this browser.</p></div>
       <MinecraftExports workspace={workspace} onChange={onWorkspace} />
       <div className="export-grid">
         <section className="export-panel">
@@ -462,7 +494,7 @@ function ExportView({ plan, workspace, onWorkspace }: { plan: HotbarPlan; worksp
 export default function App() {
   const [initial] = useState(() => {
     try { return { workspace: loadWorkspace(), error: '' } }
-    catch (error) { return { workspace: createWorkspace(), error: error instanceof Error ? error.message : 'Could not read saved layouts.' } }
+    catch (error) { return { workspace: createWorkspace(), error: error instanceof Error ? error.message : 'Could not read saved scenarios.' } }
   })
   const [workspace, setWorkspace] = useState(initial.workspace)
   const [readError, setReadError] = useState(initial.error)
@@ -487,29 +519,29 @@ export default function App() {
     { id: 'export', label: 'Export', icon: 'export' },
   ]
 
-  if (readError) return <main className="view-shell"><h1>Saved layouts need attention</h1><p role="alert">{readError}</p>
+  if (readError) return <main className="view-shell"><h1>Saved scenarios need attention</h1><p role="alert">{readError}</p>
     <button type="button" className="secondary-button" onClick={() => downloadFile(localStorage.getItem(WORKSPACE_KEY) ?? '', 'hotbar-lab-storage-backup.json', 'application/json')}>Download storage backup</button>
-    <button type="button" className="danger-button" onClick={() => { if (window.confirm('Reset unreadable saved layouts? Download a backup first.')) { setWorkspace(createWorkspace()); setReadError('') } }}>Reset saved layouts</button>
+    <button type="button" className="danger-button" onClick={() => { if (window.confirm('Reset unreadable saved scenarios? Download a backup first.')) { setWorkspace(createWorkspace()); setReadError('') } }}>Reset saved scenarios</button>
   </main>
 
   return (
     <div className="app-shell">
       <header className="topbar">
         <a className="brand" href="#" onClick={(event) => { event.preventDefault(); setView('plan') }}><span className="brand-cube"><i /></span><span>HOTBAR <b>LAB</b></span></a>
-        <div className="plan-identity"><input value={plan.name} aria-label="Plan name" onChange={(event) => setPlan({ ...plan, name: event.target.value, isExample: false })} /><span className={`save-status ${saveState}`}>{saveError ? 'Not saved' : saveState === 'saved' ? 'Saved locally' : 'Saving…'}</span>{plan.isExample && <span className="example-badge">EXAMPLE</span>}</div>
+        <div className="plan-identity"><input value={plan.name} aria-label="Scenario name" onChange={(event) => setPlan({ ...plan, name: event.target.value, isExample: false })} /><span className={`save-status ${saveState}`}>{saveError ? 'Not saved' : saveState === 'saved' ? 'Saved locally' : 'Saving…'}</span>{plan.isExample && <span className="example-badge">EXAMPLE</span>}</div>
         <nav className="main-nav" aria-label="Main views">{views.map((item) => <button type="button" key={item.id} className={view === item.id ? 'is-active' : ''} onClick={() => setView(item.id)}><MiniIcon name={item.icon} />{item.label}</button>)}</nav>
         <button className="reset-button" type="button" onClick={() => setResetOpen(true)}><MiniIcon name="reset" /><span>Reset</span></button>
       </header>
 
       {saveError && <p className="notice inline-error" role="alert">{saveError}</p>}
-      {view !== 'practice' && <Layouts workspace={workspace} onChange={setWorkspace} />}
-      {view === 'plan' && <PlanView plan={plan} onPlan={setCurrentPlan} />}
+      {view !== 'practice' && <Scenarios workspace={workspace} onChange={setWorkspace} />}
+      {view === 'plan' && <PlanView plan={plan} onPlan={setCurrentPlan} onImport={(player, scenarios, useKeys) => setWorkspace((current) => importWorkspaceScenarios(current, scenarios.map((scenario) => importPlayerScenario(player, scenario, activePlan(current), useKeys)), useKeys))} />}
       {view === 'practice' && <PracticeView key={workspace.activeLayoutId} plan={plan} />}
       {view === 'export' && <ExportView plan={plan} workspace={workspace} onWorkspace={setWorkspace} />}
 
       <footer className="footer"><span>HOTBAR LAB · MINECRAFT 1.16</span><span>Local-only · No account · No uploads</span></footer>
 
-      {resetOpen && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setResetOpen(false) }}><div className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="reset-title"><span className="dialog-mark"><MiniIcon name="reset" /></span><h2 id="reset-title">Reset all layouts?</h2><p>This restores the example layout and shared bindings. All saved layouts, assignments, and exact overrides will be replaced.</p><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setResetOpen(false)}>Cancel</button><button className="danger-button" type="button" onClick={() => { setWorkspace(createWorkspace()); setResetOpen(false); setView('plan') }}>Reset plan</button></div></div></div>}
+      {resetOpen && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setResetOpen(false) }}><div className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="reset-title"><span className="dialog-mark"><MiniIcon name="reset" /></span><h2 id="reset-title">Reset all scenarios?</h2><p>This restores the example scenario and shared bindings. All saved scenarios, assignments, and exact overrides will be replaced.</p><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setResetOpen(false)}>Cancel</button><button className="danger-button" type="button" onClick={() => { setWorkspace(createWorkspace()); setResetOpen(false); setView('plan') }}>Reset plan</button></div></div></div>}
     </div>
   )
 }

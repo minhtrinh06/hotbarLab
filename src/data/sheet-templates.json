@@ -1,0 +1,2761 @@
+{
+  "source": "https://docs.google.com/spreadsheets/d/1Efwtnfo6B0ZdNx8iLFy73GQZ8ez1HjefB2fg9lLzReQ/edit",
+  "retrieved": "2026-09-15",
+  "scenarios": [
+    {
+      "id": "ocean-ow",
+      "name": "ocean OW",
+      "group": "basic"
+    },
+    {
+      "id": "land-ow",
+      "name": "land OW",
+      "group": "basic"
+    },
+    {
+      "id": "nether-terrain",
+      "name": "nether terrain",
+      "group": "basic"
+    },
+    {
+      "id": "into-fort",
+      "name": "into fort",
+      "group": "basic"
+    },
+    {
+      "id": "blaze-bed",
+      "name": "blaze bed",
+      "group": "basic"
+    },
+    {
+      "id": "blaze-tnt",
+      "name": "blaze tnt",
+      "group": "basic"
+    },
+    {
+      "id": "cleared-spawner",
+      "name": "cleared spawner",
+      "group": "basic"
+    },
+    {
+      "id": "blinding",
+      "name": "blinding",
+      "group": "basic"
+    },
+    {
+      "id": "measure-split",
+      "name": "measure split",
+      "group": "basic"
+    },
+    {
+      "id": "to-coords",
+      "name": "to coords",
+      "group": "basic"
+    },
+    {
+      "id": "strong-hold",
+      "name": "strong hold",
+      "group": "basic"
+    },
+    {
+      "id": "zero",
+      "name": "zero",
+      "group": "basic"
+    },
+    {
+      "id": "village-f-and-s",
+      "name": "village F&S",
+      "group": "advanced"
+    },
+    {
+      "id": "village-wood-light",
+      "name": "village wood light",
+      "group": "advanced"
+    },
+    {
+      "id": "desert-temple-f-and-s",
+      "name": "desert temple F&S",
+      "group": "advanced"
+    },
+    {
+      "id": "dt-wood-light",
+      "name": "DT wood light",
+      "group": "advanced"
+    },
+    {
+      "id": "ruined-portal-obsidian",
+      "name": "ruined portal obsidian",
+      "group": "advanced"
+    },
+    {
+      "id": "ruined-portal-bucket",
+      "name": "ruined portal bucket",
+      "group": "advanced"
+    },
+    {
+      "id": "ocean-tnt",
+      "name": "ocean TNT",
+      "group": "advanced"
+    },
+    {
+      "id": "ocean-shears",
+      "name": "ocean shears",
+      "group": "advanced"
+    },
+    {
+      "id": "ocean-planks",
+      "name": "ocean planks",
+      "group": "advanced"
+    },
+    {
+      "id": "tnt-chalice",
+      "name": "tnt chalice",
+      "group": "advanced"
+    },
+    {
+      "id": "bridge",
+      "name": "bridge",
+      "group": "advanced"
+    },
+    {
+      "id": "bridge-flammable",
+      "name": "bridge flammable",
+      "group": "advanced"
+    },
+    {
+      "id": "housing",
+      "name": "housing",
+      "group": "advanced"
+    },
+    {
+      "id": "stables",
+      "name": "stables",
+      "group": "advanced"
+    },
+    {
+      "id": "treasure-start",
+      "name": "treasure start",
+      "group": "advanced"
+    },
+    {
+      "id": "treasure-mining-gold",
+      "name": "treasure mining gold",
+      "group": "advanced"
+    },
+    {
+      "id": "death-reset-to-fort",
+      "name": "death reset to fort",
+      "group": "advanced"
+    },
+    {
+      "id": "blaze-bed-and-tnt",
+      "name": "blaze bed&tnt",
+      "group": "advanced"
+    },
+    {
+      "id": "blind-death-reset",
+      "name": "blind death reset",
+      "group": "advanced"
+    },
+    {
+      "id": "portal-break",
+      "name": "portal break",
+      "group": "advanced"
+    },
+    {
+      "id": "death-reset-to-coords",
+      "name": "death reset to coords",
+      "group": "advanced"
+    },
+    {
+      "id": "stronghold-death-reset",
+      "name": "stronghold death reset",
+      "group": "advanced"
+    },
+    {
+      "id": "enter-end",
+      "name": "enter end",
+      "group": "advanced"
+    },
+    {
+      "id": "zero-sorted",
+      "name": "zero sorted",
+      "group": "advanced"
+    },
+    {
+      "id": "zero-on-setup",
+      "name": "zero on setup",
+      "group": "advanced"
+    },
+    {
+      "id": "halfbow",
+      "name": "halfbow",
+      "group": "advanced"
+    },
+    {
+      "id": "oneshot",
+      "name": "oneshot",
+      "group": "advanced"
+    }
+  ],
+  "players": [
+    {
+      "id": "hackingnoises",
+      "name": "hackingnoises",
+      "sheet": "hackingnoises",
+      "username": "hackingnoises",
+      "legacy": false,
+      "keys": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "Q",
+        "D",
+        "C",
+        "F",
+        "V"
+      ],
+      "offhandKey": "Z",
+      "scenarios": [
+        {
+          "id": "ocean-ow",
+          "name": "ocean OW",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "bricks"
+            ],
+            [
+              "oak-door"
+            ],
+            [
+              "flint-and-steel"
+            ],
+            []
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "land-ow",
+          "name": "land OW",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "bricks"
+            ],
+            [
+              "empty-bucket"
+            ],
+            [
+              "flint-and-steel"
+            ],
+            []
+          ],
+          "offhand": []
+        },
+        {
+          "id": "nether-terrain",
+          "name": "nether terrain",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "bricks"
+            ],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            []
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "into-fort",
+          "name": "into fort",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "fire-resistance"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-bed",
+          "name": "blaze bed",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "red-bed"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-tnt",
+          "name": "blaze tnt",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "tnt"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "cleared-spawner",
+          "name": "cleared spawner",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "blaze-rod"
+            ],
+            [
+              "obsidian"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blinding",
+          "name": "blinding",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "obsidian"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "measure",
+          "name": "measure",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "fire-resistance"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "to-coords",
+          "name": "to coords",
+          "slots": [
+            [
+              "axe-gold-pickaxe"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "obsidian"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "strong-hold",
+          "name": "strong hold",
+          "slots": [
+            [
+              "axe-gold-pickaxe"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "obsidian"
+            ]
+          ],
+          "offhand": [
+            "bed-food"
+          ]
+        },
+        {
+          "id": "zero",
+          "name": "zero",
+          "slots": [
+            [
+              "red-bed"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "respawn-anchor"
+            ],
+            [
+              "glowstone"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "bow"
+            ],
+            [
+              "crying-obsidian-pair"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doogile",
+      "name": "doogile",
+      "sheet": "doogile",
+      "username": "doogile",
+      "legacy": false,
+      "keys": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "R",
+        "C",
+        "V",
+        "F",
+        "G"
+      ],
+      "offhandKey": "MB4",
+      "scenarios": [
+        {
+          "id": "ocean-ow",
+          "name": "ocean OW",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "oak-door"
+            ],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "bricks"
+            ],
+            [
+              "shears"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "land-ow",
+          "name": "land OW",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "bricks"
+            ],
+            [
+              "shears"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "nether-terrain",
+          "name": "nether terrain",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "bricks"
+            ],
+            [
+              "shears"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "into-fort",
+          "name": "into fort",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "bed-tnt"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "gravel"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-bed",
+          "name": "blaze bed",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "red-bed"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "nether-brick"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-tnt",
+          "name": "blaze tnt",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "tnt"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "nether-brick"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "cleared-spawner",
+          "name": "cleared spawner",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "crafting-table"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "gravel"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blinding",
+          "name": "blinding",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "gravel"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "measure",
+          "name": "measure",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "fire-resistance"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "gravel"
+            ]
+          ],
+          "offhand": [
+            "fishing-rod"
+          ]
+        },
+        {
+          "id": "to-coords",
+          "name": "to coords",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "gravel"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "strong-hold",
+          "name": "strong hold",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "gravel"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "zero",
+          "name": "zero",
+          "slots": [
+            [
+              "red-bed"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "bow"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "respawn-anchor"
+            ],
+            [
+              "crying-obsidian-pair"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "nether-brick"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "infume",
+      "name": "infume",
+      "sheet": "infume old",
+      "username": "infume",
+      "legacy": true,
+      "keys": [],
+      "offhandKey": null,
+      "scenarios": [
+        {
+          "id": "ocean",
+          "name": "ocean",
+          "slots": [
+            [
+              "oak-door"
+            ],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [],
+            [],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "dirt"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "land",
+          "name": "land",
+          "slots": [
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "empty-bucket"
+            ],
+            [],
+            [],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "dirt"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "nether",
+          "name": "nether",
+          "slots": [
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [],
+            [],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "dirt"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "into-fort",
+          "name": "into fort",
+          "slots": [
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "fire-resistance"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "pre-blaze-bed",
+          "name": "pre blaze bed",
+          "slots": [
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "red-bed"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "blaze-tnt",
+          "name": "blaze tnt",
+          "slots": [
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "tnt"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "post-blaze-bed",
+          "name": "post blaze bed",
+          "slots": [
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "blind",
+          "name": "blind",
+          "slots": [
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "strong-hold",
+          "name": "strong hold",
+          "slots": [
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "cooked-cod"
+          ]
+        },
+        {
+          "id": "zero",
+          "name": "zero",
+          "slots": [
+            [
+              "red-bed"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "crying-obsidian"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "glowstone"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "respawn-anchor"
+            ],
+            [
+              "bow"
+            ],
+            [
+              "nether-brick"
+            ]
+          ],
+          "offhand": []
+        }
+      ]
+    },
+    {
+      "id": "silverruns",
+      "name": "silverruns",
+      "sheet": "silverrruns",
+      "username": "silverrruns",
+      "legacy": false,
+      "keys": [
+        "E",
+        "X",
+        "Q",
+        "C",
+        "4",
+        "F",
+        "1",
+        "3",
+        "2"
+      ],
+      "offhandKey": "MB5",
+      "scenarios": [
+        {
+          "id": "ocean-ow",
+          "name": "ocean OW",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "bricks"
+            ],
+            [],
+            [
+              "oak-door"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "land-ow",
+          "name": "land OW",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "bricks"
+            ],
+            [],
+            [
+              "empty-bucket"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "nether-terrain",
+          "name": "nether terrain",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "bricks"
+            ],
+            [],
+            [],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "into-fort",
+          "name": "into fort",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "bed-tnt"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-bed",
+          "name": "blaze bed",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "red-bed"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-tnt",
+          "name": "blaze tnt",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "tnt"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "cleared-spawner",
+          "name": "cleared spawner",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "crafting-table"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blinding",
+          "name": "blinding",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "measure",
+          "name": "measure",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "fire-resistance"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "to-coords",
+          "name": "to coords",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "pickaxes"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "strong-hold",
+          "name": "strong hold",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "apple"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ],
+            [
+              "pickaxes"
+            ]
+          ],
+          "offhand": []
+        },
+        {
+          "id": "zero",
+          "name": "zero",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "crying-obsidian-pair"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "bow"
+            ],
+            [
+              "respawn-anchor"
+            ],
+            [
+              "red-bed"
+            ],
+            [
+              "pickaxes"
+            ]
+          ],
+          "offhand": []
+        }
+      ]
+    },
+    {
+      "id": "lowkey",
+      "name": "lowkey",
+      "sheet": "lowkey",
+      "username": "lowk3y_",
+      "legacy": false,
+      "keys": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "offhandKey": null,
+      "scenarios": [
+        {
+          "id": "ocean-ow",
+          "name": "ocean OW",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "flint-and-steel"
+            ],
+            [],
+            [
+              "oak-door"
+            ],
+            [],
+            [
+              "bricks"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "land-ow",
+          "name": "land OW",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "flint-and-steel"
+            ],
+            [],
+            [
+              "apple"
+            ],
+            [],
+            [
+              "bricks"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "nether-terrain",
+          "name": "nether terrain",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "flint-and-steel"
+            ],
+            [],
+            [],
+            [],
+            [
+              "bricks"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "into-fort",
+          "name": "into fort",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "bed-tnt"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-bed",
+          "name": "blaze bed",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "red-bed"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-tnt",
+          "name": "blaze tnt",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "tnt"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "cleared-spawner",
+          "name": "cleared spawner",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "blaze-rod"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blinding",
+          "name": "blinding",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "measure-split",
+          "name": "measure split",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "fire-resistance"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "to-coords",
+          "name": "to coords",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "strong-hold",
+          "name": "strong hold",
+          "slots": [
+            [
+              "iron-axe"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "zero",
+          "name": "zero",
+          "slots": [
+            [
+              "respawn-anchor"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "red-bed"
+            ],
+            [
+              "oak-boat"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "bow"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "soul-sand"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "edcr",
+      "name": "edcr",
+      "sheet": "edcr",
+      "username": "edcr",
+      "legacy": false,
+      "keys": [
+        "5",
+        "T",
+        "F",
+        "V",
+        "3",
+        "C",
+        "E",
+        "X",
+        "4"
+      ],
+      "offhandKey": "Tab",
+      "scenarios": [
+        {
+          "id": "ocean-ow",
+          "name": "ocean OW",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "shears"
+            ],
+            [
+              "bricks"
+            ],
+            [
+              "oak-door"
+            ],
+            [],
+            [],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "land-ow",
+          "name": "land OW",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "shears"
+            ],
+            [
+              "bricks"
+            ],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "apple"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "empty-bucket"
+          ]
+        },
+        {
+          "id": "nether-terrain",
+          "name": "nether terrain",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "shears"
+            ],
+            [
+              "bricks"
+            ],
+            [],
+            [
+              "flint-and-steel"
+            ],
+            [
+              "empty-bucket"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "into-fort",
+          "name": "into fort",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "bed-tnt"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-bed",
+          "name": "blaze bed",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "red-bed"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "iron-shovel"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blaze-tnt",
+          "name": "blaze tnt",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "tnt"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "iron-pickaxe"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "cleared-spawner",
+          "name": "cleared spawner",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "iron-sword"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "blinding",
+          "name": "blinding",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "measure-split",
+          "name": "measure split",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "fire-resistance"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "to-coords",
+          "name": "to coords",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "strong-hold",
+          "name": "strong hold",
+          "slots": [
+            [
+              "oak-boat"
+            ],
+            [
+              "obsidian"
+            ],
+            [
+              "gravel"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "fire-charge"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "ender-eye"
+            ],
+            [
+              "iron-axe"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        },
+        {
+          "id": "zero",
+          "name": "zero",
+          "slots": [
+            [
+              "glowstone"
+            ],
+            [
+              "crying-obsidian-pair"
+            ],
+            [
+              "nether-brick"
+            ],
+            [
+              "soul-sand"
+            ],
+            [
+              "respawn-anchor"
+            ],
+            [
+              "ender-pearl"
+            ],
+            [
+              "pickaxes"
+            ],
+            [
+              "bow"
+            ],
+            [
+              "red-bed"
+            ]
+          ],
+          "offhand": [
+            "apple"
+          ]
+        }
+      ]
+    }
+  ]
+}

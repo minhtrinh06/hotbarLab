@@ -1,5 +1,6 @@
 import type { Binding, HotbarPlan, Workspace } from '../types'
 import { createStarterPlan } from '../data/starter'
+import { ensureScenarioTemplates } from './scenario-workspace'
 
 export const STORAGE_KEY = 'hotbar-lab.plan.v1'
 
@@ -33,18 +34,19 @@ export function savePlan(plan: HotbarPlan, storage: Pick<Storage, 'setItem'> = l
 export const WORKSPACE_KEY = 'hotbar-lab.workspace.v2'
 
 export function createWorkspace(plan = createStarterPlan()): Workspace {
-  return {
+  return ensureScenarioTemplates({
     version: 2, activeLayoutId: 'default', defaultLayoutId: 'default',
     layouts: [{ id: 'default', name: plan.name, isExample: plan.isExample,
       slots: plan.hotbarSlots.map(({ slot, flex, items }) => ({ slot, flex, items })) }],
     bindings: { hotbar: plan.hotbarSlots.map((slot) => slot.binding), offhand: plan.offhand, other: plan.otherBindings },
     destinations: {},
-  }
+  })
 }
 
 export function activePlan(workspace: Workspace, id = workspace.activeLayoutId): HotbarPlan {
   const layout = workspace.layouts.find((entry) => entry.id === id)!
   return { version: 1, name: layout.name, isExample: layout.isExample,
+    flexSpotsEnabled: layout.flexSpotsEnabled ?? true, ...(layout.offhandItems?.length ? { offhandItems: layout.offhandItems } : {}),
     hotbarSlots: layout.slots.map((slot, index) => ({ ...slot, binding: workspace.bindings.hotbar[index] })),
     offhand: workspace.bindings.offhand, otherBindings: workspace.bindings.other }
 }
@@ -53,6 +55,7 @@ export function updateActivePlan(workspace: Workspace, plan: HotbarPlan): Worksp
   return { ...workspace,
     layouts: workspace.layouts.map((layout) => layout.id !== workspace.activeLayoutId ? layout : {
       ...layout, name: plan.name, isExample: plan.isExample,
+      flexSpotsEnabled: plan.flexSpotsEnabled, offhandItems: plan.offhandItems,
       slots: plan.hotbarSlots.map(({ slot, flex, items }) => ({ slot, flex, items })),
     }),
     bindings: { hotbar: plan.hotbarSlots.map((slot) => slot.binding), offhand: plan.offhand, other: plan.otherBindings },
@@ -99,7 +102,7 @@ export function loadWorkspace(storage: Pick<Storage, 'getItem'> = localStorage):
             && (item === null || (typeof item.id === 'string' && Number.isInteger(item.count) && item.count > 0))))) {
         throw new Error('Invalid workspace')
       }
-      return w
+      return ensureScenarioTemplates(w)
     } catch {
       // Keep corrupt v2 data available for recovery rather than silently replacing it.
       throw new Error('Saved layouts could not be read. Back up browser storage before resetting it.')

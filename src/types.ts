@@ -19,6 +19,10 @@ export interface ItemRef {
 }
 
 export interface SavedLayout {
+  group?: ScenarioGroup
+  playerId?: string
+  flexSpotsEnabled?: boolean
+  offhandItems?: ItemRef[]
   id: string
   name: string
   isExample: boolean
@@ -33,6 +37,7 @@ export interface DestinationSettings {
 }
 
 export interface Workspace {
+  scenarioTemplatesVersion?: 1
   version: 2
   activeLayoutId: string
   defaultLayoutId: string
@@ -59,6 +64,8 @@ export interface OtherBinding {
 }
 
 export interface HotbarPlan {
+  flexSpotsEnabled?: boolean
+  offhandItems?: ItemRef[]
   version: 1
   name: string
   isExample: boolean
@@ -67,11 +74,15 @@ export interface HotbarPlan {
   otherBindings: OtherBinding[]
 }
 
+export type PracticeGroup = 'hotbar' | 'minecraft' | 'macros' | 'ninjabrain' | 'other'
+
 export interface PracticePrompt {
   id: string
+  group: PracticeGroup
   label: string
   sourceLabel: string
   sprite?: string
+  spriteStyle?: 'screenshot' | 'shield'
   binding: Binding
 }
 
@@ -80,4 +91,20 @@ export interface PracticeResult {
   correct: boolean
   reactionMs: number
   entered: string
+}
+
+export type ScenarioGroup = 'main' | 'basic' | 'advanced' | 'custom' | 'player'
+
+export interface SavedScenario {
+  id: string
+  group: ScenarioGroup
+  playerId?: string
+  plan: HotbarPlan
+}
+
+export interface ScenarioLibrary {
+  version: 1
+  activeId: string
+  defaultId: string
+  scenarios: SavedScenario[]
 }
